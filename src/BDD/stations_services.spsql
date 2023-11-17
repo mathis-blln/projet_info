@@ -1,0 +1,7 @@
+"BDD STATIONS"
+CREATE TABLE STATIONS ( 
+    id_stations INTEGER(8),
+    nom VARCHAR(50),
+    longitude INTEGER(30),
+    latitude INTEGER(30),
+);
