@@ -1,22 +1,34 @@
-from Classe.Authentification import Authentification
 import unittest
+from Classe.Authentification import Authentification
 
-class TestAuthentificationMethods(unittest.TestCase):
-    def test_init(self):
-        # Vérifie si l'initialisation de l'objet Authentification se déroule correctement
-        auth = Authentification("utilisateur1", "123")
-        self.assertEqual(auth._id_utilisateur, "utilisateur1")
-        self.assertEqual(auth._mot_de_passe, "123")
 
-    def test_compare(self):
-        # Crée un objet Authentification pour les tests
-        auth = Authentification("utilisateur1", "123")
+class TestAuthentification(unittest.TestCase):
+    def setUp(self):
+        # Créer une instance d'Authentification avec des valeurs par défaut pour les tests
+        self.auth = Authentification("utilisateur_test", "mot_de_passe_test")
 
-        # Vérifie si la méthode compare fonctionne correctement pour des identifiants valides
-        self.assertTrue(auth.compare("utilisateur1", "123"))
+    def test_compare_authentification_valide(self):
+        result = self.auth.compare("utilisateur_test", "mot_de_passe_test")
+        self.assertTrue(result)
 
-        # Vérifie si la méthode compare fonctionne correctement pour des identifiants invalides
-        self.assertFalse(auth.compare("utilisateur2", "456"))
+    def test_compare_authentification_invalide_id_utilisateur(self):
+        result = self.auth.compare("utilisateur_invalide", "mot_de_passe_test")
+        self.assertFalse(result)
 
-if __name__ == '__main__':
+    def test_compare_authentification_invalide_mot_de_passe(self):
+        result = self.auth.compare("utilisateur_test", "mot_de_passe_invalide")
+        self.assertFalse(result)
+
+    def test_compare_authentification_invalide_id_et_mot_de_passe(self):
+        result = self.auth.compare("utilisateur_invalide", "mot_de_passe_invalide")
+        self.assertFalse(result)
+
+    def test_str_representation(self):
+        expected_output = (
+            "ID utilisateur: utilisateur_test, mot de passe : mot_de_passe_test"
+        )
+        self.assertEqual(str(self.auth), expected_output)
+
+
+if __name__ == "__main__":
     unittest.main()

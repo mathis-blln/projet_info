@@ -12,8 +12,7 @@ class Authentification:
 
     def __str__(self):
         return f"ID utilisateur: {self._id_utilisateur}, mot de passe : {self._mot_de_passe}"
-
-     """
+        """
         Retourne une représentation sous forme de chaîne de caractères de l'objet Utilisateur.
 
         Returns:
@@ -31,7 +30,10 @@ class Authentification:
         Returns:
             bool: True si les identifiants sont valides, False sinon.
         """
-        if self._id_utilisateur == id_utilisateur and self._mot_de_passe == mot_de_passe:
+        if (
+            self._id_utilisateur == id_utilisateur
+            and self._mot_de_passe == mot_de_passe
+        ):
             return True
         else:
             return False
