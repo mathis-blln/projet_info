@@ -1,19 +1,19 @@
 from projet_info.DAO.db_connection import DBConnection
 from projet_info.Classe.Liste import Liste
-#
+from typing import Optional
 
 class ListeDAO:
 
-    def find_all_listes(self, id_user):  # La fonction taille_table est importante 
-    with DBConnection().connection as connection:  # pour affecter à chaque nouveau
-        with connection.cursor() as cursor:  # objet un "id" différent
-            cursor.execute(
-                "SELECT id_utilisateur, id_liste, nom_liste         "
-                "FROM projet.listes                                 "
-                "WHERE id_utilisateur = %(id_user)s                 ",
-                {"id_user": id_user},
-            )
-            res = cursor.fetchall()
+    def find_all_listes(self, id_user):
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "SELECT id_utilisateur, id_liste, nom_liste         "
+                    "FROM projet.listes                                 "
+                    "WHERE id_utilisateur = %(id_user)s                 ",
+                    {"id_user": id_user},
+                )
+                res = cursor.fetchall()
 
         listes = []
 
@@ -26,14 +26,16 @@ class ListeDAO:
                 listes.append(element)
 
         return listes
-    def taille_table(self, id_user) -> int:  # La fonction taille_table est importante 
-        with DBConnection().connection as connection:  # pour affecter à chaque nouveau65
-            with connection.cursor() as cursor:  # objet un "id" différent
+
+    def taille_table(self, id_user) -> int:
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
                 cursor.execute(
                     "SELECT COUNT(*)       "
                     "FROM projet.listes             ",
                 )
                 res = cursor.fetchone()
+
             if res is not None:
                 return int(res["count"])
             else:
@@ -57,6 +59,7 @@ class ListeDAO:
                 res = cursor.fetchone()
                 element = Liste(res["id_liste"], res["id_utilisateur"], res["nom_liste"])
                 return element
+
     def remove_liste(self, id_user, id_liste) -> Optional[bool]:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
