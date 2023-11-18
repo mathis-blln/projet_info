@@ -2,7 +2,7 @@ import requests
 import zipfile
 import io
 import xml.etree.ElementTree as ET
-from projet_info.src.Classe.Coordonnees import Coordonnees
+from Classe.Coordonnees import Coordonnees
 from helper import trier, selectionner_n_premiers
 
 # from flask import jsonify
