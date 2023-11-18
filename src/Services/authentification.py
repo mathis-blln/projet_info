@@ -6,21 +6,22 @@ class Authentification:
         detecte = 0
         while not detecte:
             id_user = input("Votre id: ")
-            mdp = input("Votre mdp: ")        
+            mdp = input("Votre mdp: ")
             verify = AuthentificationDAO().verification(id_user, mdp)
-            if (not verify):
+            if not verify:
                 print("-----------------------------------")
-                print("Le mot de passe rentré ne correspond pas à l'identifiant choisi.")
+                print(
+                    "Le mot de passe rentré ne correspond pas à l'identifiant choisi."
+                )
                 print("Veuillez réessayer.")
                 print("-----------------------------------")
             else:
-                detecte = 1                
+                detecte = 1
                 print("-----------------------------------")
-                print("Connexion réussite.")
+                print("Connexion réussie.")
                 print("-----------------------------------")
                 pass
 
 
 if __name__ == "__main__":
-
     Authentification().verifier()
