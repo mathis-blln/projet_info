@@ -1,10 +1,9 @@
-from projet_info.DAO.db_connection import DBConnection
-from projet_info.Classe.Liste import Liste
-
+from DAO.db_connection import DBConnection
+from Classe.Liste import Liste
 
 
 class ConsulterListeDAO:
-    def find_all_listes(self, id_user):  # La fonction taille_table est importante 
+    def find_all_listes(self, id_user):  # La fonction taille_table est importante
         with DBConnection().connection as connection:  # pour affecter à chaque nouveau
             with connection.cursor() as cursor:  # objet un "id" différent
                 cursor.execute(
