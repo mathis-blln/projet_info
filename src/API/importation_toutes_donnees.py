@@ -10,15 +10,11 @@ import datetime
 import json
 
 
-# j'ai modiifé ici pour le texte + la DAO ajouterstations + la dao creerliste
-# on peut rassembler consulterlistedao et creerlistedao (méthode crud)
-# j'ai retiré readme de srs, + il faut le fichier .vscode à l'extérieur avec le settings.json à l'intérieur
-# mettre l'environnement : pk pas sur git ??
-# est ce que c'est bien une API si on fait tout dans le main ?
 # il faut que j'utilise les classes dans le premier code pour avoir directement les stations à la fin
-# faire plusieurs fonctions selon les cas : si il met pas de filtres, je peux quand même gérer
 # découper en 2 méthodes je pense, c'est long là
-# mettre mes méthodes dans station, ou il faut faire une classe API avec des get/post ??
+# faire deux fonctions pour récupérer les différents services et carburant
+
+
 def trouver_stations_par_filtres(
     n: int,
     services_recherches: list,
