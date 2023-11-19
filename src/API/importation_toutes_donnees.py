@@ -4,6 +4,7 @@ import io
 import xml.etree.ElementTree as ET
 from Classe.Coordonnees import Coordonnees
 from helper import trier, selectionner_n_premiers
+import datetime
 
 # from flask import jsonify
 import json
@@ -29,7 +30,8 @@ def trouver_stations_par_filtres(
     # on pourra rajouter aussi le paramètre horaire après
     # faut que j'utilise la classe service enft
     url = "https://donnees.roulez-eco.fr/opendata/instantane"
-
+    debut_execution = datetime.datetime.now()
+    print(f"Début d'exécution : {debut_execution}")
     try:
         response = requests.get(url)
 
