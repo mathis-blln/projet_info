@@ -1,6 +1,7 @@
 from projet_info.DAO.authentificationDAO import AuthentificationDAO
 
 
+# faire une fonction "changer_mdp" si il y arrive pas
 class Authentification:
     def verifier(self):
         detecte = 0

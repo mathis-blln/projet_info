@@ -27,6 +27,7 @@ def trouver_stations_par_filtres(
     # pour les services, mettre liste vide si aucun filtre dessus
     # pour les carburants, tous les mettre ["Gazole", "E10", "GPLc","SP98","SP95","E85"]
     # on pourra rajouter aussi le paramètre horaire après
+    # faut que j'utilise la classe service enft
     url = "https://donnees.roulez-eco.fr/opendata/instantane"
 
     try:

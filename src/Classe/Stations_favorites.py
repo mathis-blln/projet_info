@@ -17,3 +17,5 @@ class Station_favorites:
     def __str__(self):
         return f"ID utilisateur: {self._id_utilisateur}, ID station favorite: {self.id_station}"
 
+
+# on peut supprimer celle là jpense elle sert pas (c'est une station)
