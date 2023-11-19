@@ -3,18 +3,99 @@ import zipfile
 import io
 import xml.etree.ElementTree as ET
 from Classe.Coordonnees import Coordonnees
-from helper import trier, selectionner_n_premiers
+from Classe.TypeCarburant import TypeCarburant
+from Classe.Service import Services
+from helper import *
 import datetime
 
 # from flask import jsonify
 import json
-
 
 # il faut que j'utilise les classes dans le premier code pour avoir directement les stations à la fin
 # découper en 2 méthodes je pense, c'est long là
 # faire deux fonctions pour récupérer les différents services et carburant
 
 
+def get_distinct_elements():
+    """
+    Récupère et retourne tous les éléments distincts du fichier XML compressé, convertis en instances de classe.
+
+    Args:
+        url (str): L'URL du fichier XML compressé.
+
+    Returns:
+        list: Liste d'instances de la classe Carburant.
+        list: Liste d'instances de la classe Services.
+    """
+    url = "https://donnees.roulez-eco.fr/opendata/instantane"
+    carburants_temp = set()
+    services_temp = set()
+
+    try:
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            zip_content = response.content
+
+            with zipfile.ZipFile(io.BytesIO(zip_content)) as zip_file:
+                xml_file_name = "PrixCarburants_instantane.xml"
+
+                if xml_file_name in zip_file.namelist():
+                    xml_content = zip_file.read(xml_file_name).decode("latin-1")
+                    root = ET.fromstring(xml_content)
+
+                    for pdv_element in root.findall(".//pdv"):
+                        for carburant_element in pdv_element.findall(".//prix"):
+                            carburants_temp.add(
+                                (
+                                    carburant_element.get("id"),
+                                    carburant_element.get("nom"),
+                                )
+                            )
+
+                        for service_element in pdv_element.findall(
+                            ".//services/service"
+                        ):
+                            services_temp.add(service_element.text)
+
+                else:
+                    print(
+                        f"Le fichier {xml_file_name} n'est pas présent dans le fichier ZIP."
+                    )
+
+        else:
+            print(
+                f"La requête a échoué avec le code de statut : {response.status_code}"
+            )
+
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur de requête : {e}")
+    except ET.ParseError:
+        print("Le contenu extrait n'est pas un fichier XML valide.")
+
+    # Convertir les éléments temporaires en instances de classe
+    carburants = [
+        TypeCarburant(carburant_id, carburant_nom)
+        for carburant_id, carburant_nom in carburants_temp
+    ]
+    services = [Services(nom) for nom in services_temp]
+
+    return carburants, services
+
+
+# Exemple d'utilisation
+
+carburants, services = get_distinct_elements()
+
+# Affichage des carburants et services
+print("Carburants distincts:")
+for carburant in carburants:
+    print(carburant)
+
+print("\nServices distincts:")
+for service in services:
+    print(service)
+"""
 def trouver_stations_par_filtres(
     n: int,
     services_recherches: list,
@@ -189,3 +270,4 @@ else:
 
 liste_station = [74800004, 77390005, 77390003]
 print(info_stations_preferees(liste_station))
+"""
