@@ -12,8 +12,7 @@ import datetime
 import json
 
 # il faut que j'utilise les classes dans le premier code pour avoir directement les stations à la fin
-# découper en 2 méthodes je pense, c'est long là
-# faire deux fonctions pour récupérer les différents services et carburant
+# il faut que je transforme en vrai objet station (donc redéfinir les classes)
 
 
 def get_distinct_elements():
