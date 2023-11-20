@@ -16,4 +16,4 @@ def adresse_en_coordonnees(adresse):
         return None
 
 
-print(adresse_en_coordonnees("3 rue de la fontaine saint martin, Soignolles-en-Brie"))
+print(adresse_en_coordonnees("la renouette, Laillé"))
