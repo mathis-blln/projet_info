@@ -1,4 +1,4 @@
-from projet_info.DAO.authentificationDAO import AuthentificationDAO
+from DAO.authentificationDAO import AuthentificationDAO
 
 
 # faire une fonction "changer_mdp" si il y arrive pas
