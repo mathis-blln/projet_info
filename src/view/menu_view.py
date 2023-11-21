@@ -1,12 +1,16 @@
 import sys
-sys.path.insert(0, '\\filer-eleves2\id2315\projet_info\projet_info')
-from projet_info.DAO.InscriptionDAO import InscriptionDAO
+
+sys.path.insert(0, "\\filer-eleves2\id2315\projet_info\projet_info")
+from DAO.InscriptionDAO import InscriptionDAO
 
 from InquirerPy import inquirer
 from abstract_view import AbstractView
 from session_view import Session
-from projet_info.DAO.InscriptionDAO import InscriptionDAO
-from projet_info.DAO.MenuDAO import MenuDAO  # Créez votre propre DAO pour gérer les fonctionnalités du menu
+from DAO.InscriptionDAO import InscriptionDAO
+from DAO.MenuDAO import (
+    MenuDAO,
+)  # Créez votre propre DAO pour gérer les fonctionnalités du menu
+
 
 class MenuView(AbstractView):
     def __init__(self):
@@ -19,8 +23,8 @@ class MenuView(AbstractView):
                     {"name": "Effectuer une recherche"},
                     {"name": "Consulter mes stations favorites"},
                     {"name": "Modifier/Supprimer mes stations favorites"},
-                    {"name": "Déconnexion"}
-                ]
+                    {"name": "Déconnexion"},
+                ],
             }
         ]
 
@@ -44,6 +48,9 @@ class MenuView(AbstractView):
             elif choice == "Déconnexion":
                 Session().clear_session()  # Efface les informations de session
                 from view.connexion_view import ConnexionView
+
                 return ConnexionView()  # Retourne à la vue de connexion
 
-            input("Appuyez sur Entrée pour revenir au menu")  # Attente de l'entrée utilisateur pour revenir au menu principal
+            input(
+                "Appuyez sur Entrée pour revenir au menu"
+            )  # Attente de l'entrée utilisateur pour revenir au menu principal
