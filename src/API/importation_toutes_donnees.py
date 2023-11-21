@@ -202,7 +202,7 @@ def trouver_stations_par_filtres(
         print("Le contenu extrait n'est pas un fichier XML valide.")
 
 
-trouver_stations_par_filtres(5, [], ["Gazole"], 48.6428477, 2.7143162)
+trouver_stations_par_filtres(5, "", "Gazole", 48.6428477, 2.7143162)
 
 
 def trouver_informations_par_id(id_station: int):
