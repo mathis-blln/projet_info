@@ -15,8 +15,3 @@ class TypeCarburant:
 
     def __str__(self):
         return f"ID carburant: {self.id_carburant}, Nom carburant: {self.nom_carburant}"
-
-
-gazole = TypeCarburant(2, "gazole")
-gazole.id_carburant
-print(gazole)
