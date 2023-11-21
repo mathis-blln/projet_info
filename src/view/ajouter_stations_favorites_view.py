@@ -1,6 +1,7 @@
 from InquirerPy import inquirer
 from view.abstract_view import AbstractView
-from projet_info.DAO.creerListeDAO import CreerlisteDAO
+from DAO.creerListeDAO import CreerlisteDAO
+
 
 class ListesFavoritesView(AbstractView):
     def __init__(self):
@@ -18,7 +19,9 @@ class ListesFavoritesView(AbstractView):
     def make_choice(self):
         answers = inquirer.prompt(self.__questions)
         nom_liste = answers["nom_liste"]
-        id_utilisateur = "ID_UTILISATEUR_ACTUEL"  # Remplacez par l'ID de l'utilisateur actuel
+        id_utilisateur = (
+            "ID_UTILISATEUR_ACTUEL"  # Remplacez par l'ID de l'utilisateur actuel
+        )
 
         creer_liste = Creerliste()
         creer_liste.ajouter_liste(id_utilisateur, nom_liste)
