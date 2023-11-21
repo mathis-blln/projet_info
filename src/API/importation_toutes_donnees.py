@@ -98,8 +98,8 @@ for service in services:
 
 def trouver_stations_par_filtres(
     n: int,
-    services_recherches: list,
-    carburants_recherches: list,
+    services_recherches: str,
+    carburants_recherches: str,
     latitude,
     longitude
     # coor_utilisateur: Coordonnees,
@@ -112,6 +112,8 @@ def trouver_stations_par_filtres(
 
     debut_execution = datetime.datetime.now()
     print(f"Début d'exécution : {debut_execution}")
+    services_recherches = split_input(services_recherches)
+    carburants_recherches = split_input(carburants_recherches)
 
     try:
         response = requests.get(url)
