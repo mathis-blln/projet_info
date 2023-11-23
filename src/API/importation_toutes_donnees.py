@@ -8,6 +8,7 @@ from Classe.Service import Services
 from helper import *
 from geopy.geocoders import Nominatim
 import datetime
+
 # from flask import jsonify
 import json
 
@@ -95,10 +96,9 @@ print("\nServices distincts:")
 for service in services:
     print(service)
 
+
 def adresse_en_coordonnees(adresse):
-    geolocator = Nominatim(
-        user_agent="géoloc"
-    ) 
+    geolocator = Nominatim(user_agent="géoloc")
 
     location = geolocator.geocode(adresse)
 
@@ -246,7 +246,17 @@ def trouver_informations_par_id(id_station: int):
                             "longitude": float(pdv_element.get("longitude")) / 100000,
                             "cp": pdv_element.get("cp"),
                             "adresse": pdv_element.findtext(".//adresse"),
+                            "carburants": [],
                         }
+                        prix_elements = pdv_element.findall(".//prix")
+                        for prix_element in prix_elements:
+                            carburant_info = {
+                                "nom": prix_element.get("nom"),
+                                "id": prix_element.get("id"),
+                                "valeur": float(prix_element.get("valeur")),
+                            }
+                            station_info["carburants"].append(carburant_info)
+
                         return station_info
                     else:
                         return None
