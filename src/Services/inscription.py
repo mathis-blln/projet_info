@@ -3,7 +3,7 @@ from DAO.inscriptionDAO import InscriptionDAO
 # from projet_info.Classe.Utilisateur import Utilisateur
 
 
-# on peut ajouter des fonctions comme changer mdp, ou le hachage
+# on peut ajouter des fonctions comme changer mdp, ou le hashage
 class Inscription:
     def inscrire(self, nom_utilsateur, mdp):
         inscrit = InscriptionDAO().add_user(nom_utilsateur, mdp)
