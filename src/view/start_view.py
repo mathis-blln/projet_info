@@ -6,46 +6,27 @@ class StartView(AbstractView):
                 "name": "choix",
                 "message": f"Hello {Session().user_name}",
                 "choices": [
-                    "Connection",
-                    "Battle",
-                    "List pokemons",
-                    "List attacks",
-                    "Create a pokemon",
-                    "Quit",
+                    "Connexion" "Inscription" "Faire une recherche" "Quitter",
                 ],
             }
         ]
 
-    def display_info(self):
-        with open("src/graphical_assets/banner.txt", "r", encoding="utf-8") as asset:
-            print(asset.read())
-
     def make_choice(self):
         reponse = prompt(self.__questions)
-        if reponse["choix"] == "Quit":
+        if reponse["choix"] == "Quitter":
             pass
 
-        elif reponse["choix"] == "Connection":
-            from view.connection_view import ConnectionView
+        elif reponse["choix"] == "Connexion":
+            from view.connexion_view import ConnexionView
 
-            return ConnectionView()
+            return ConnexionView()
 
-        elif reponse["choix"] == "Battle":
-            from view.battle_view import BattleView
+        elif reponse["choix"] == "Inscription":
+            from view.inscription_view import InscriptionView
 
-            return BattleView()
+            return InscriptionView()
 
-        elif reponse["choix"] == "List pokemons":
-            from view.pokemon_list_view import PokemonListView
+        elif reponse["choix"] == "Faire une recherche":
+            from view.recherche_view import RechercheView
 
-            return PokemonListView()
-
-        elif reponse["choix"] == "List attacks":
-            from view.attack_list_view import AttackListView
-
-            return AttackListView()
-
-        elif reponse["choix"] == "Create a pokemon":
-            from view.create_pokemon_view import CreatePokemonView
-
-            return CreatePokemonView()
+            return RechercheView()
