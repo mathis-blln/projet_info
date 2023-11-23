@@ -1,7 +1,7 @@
 from Classe.TypeCarburant import TypeCarburant
 
 class PrixCarburant:
-    def __init__(self, id_carburant, prix):
+    def __init__(self, id_carburant, id_station, prix):
         """
         Initialise une instance de la classe PrixCarburant avec un identifiant de carburant et son prix.
 
@@ -10,6 +10,7 @@ class PrixCarburant:
             prix (float): Le prix du carburant en unité monétaire (par exemple, en euros par litre).
         """
         self.id_carburant = id_carburant
+        self.id_station = id_station 
         self.prix = prix
 
         def __str__(self):

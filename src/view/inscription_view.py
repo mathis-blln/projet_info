@@ -5,6 +5,7 @@ from DAO.inscriptionDAO import InscriptionDAO
 from DAO.authentificationDAO import AuthentificationDAO
 
 
+
 class InscriptionView(AbstractView):
     def __init__(self):
         self.__questions = [
@@ -22,15 +23,25 @@ class InscriptionView(AbstractView):
                 "type": "password",
                 "name": "mot de passe",
                 "message": "Entrez votre mot de passe",
+<<<<<<< HEAD
                 # "mask": "*",
+=======
+                # "masked": True,
+>>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
             },
         ]
 
     def display_info(self):
+<<<<<<< HEAD
         print("-----------------------------------")
         print("Bienvenue ! Veuillez vous inscrire en choisissant un mot de passe.")
         print("Un identifiant vous sera attribué.")
         print("-----------------------------------")
+=======
+        print(
+            "Bienvenue ! Veuillez vous inscrire en choisissant un identifiant et un mot de passe"
+        )
+>>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
 
     def make_choice(self):
         answers = prompt(self.__questions)
@@ -56,7 +67,11 @@ class InscriptionView(AbstractView):
             )
             from view.start_view import StartView
 
+<<<<<<< HEAD
             StartView()
+=======
+            return StartView()
+>>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
         else:
             print("Echec de l'inscription.")
             InscriptionView()  # Retourne à la vue d'inscription en cas d'échec

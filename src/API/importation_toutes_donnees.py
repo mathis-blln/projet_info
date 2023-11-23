@@ -2,32 +2,132 @@ import requests
 import zipfile
 import io
 import xml.etree.ElementTree as ET
-from projet_info.src.Classe.Coordonnees import Coordonnees
-from helper import trier, selectionner_n_premiers
+from Classe.Coordonnees import Coordonnees
+from Classe.TypeCarburant import TypeCarburant
+from Classe.Service import Services
+from helper import *
+from geopy.geocoders import Nominatim
+import datetime
 
 # from flask import jsonify
 import json
 
-
-# j'ai modiifé ici pour le texte + la DAO ajouterstations + la dao creerliste
-# on peut rassembler consulterlistedao et creerlistedao (méthode crud)
-# j'ai retiré readme de srs, + il faut le fichier .vscode à l'extérieur avec le settings.json à l'intérieur
-# mettre l'environnement : pk pas sur git ??
-# est ce que c'est bien une API si on fait tout dans le main ?
 # il faut que j'utilise les classes dans le premier code pour avoir directement les stations à la fin
-# faire plusieurs fonctions selon les cas : si il met pas de filtres, je peux quand même gérer
-# découper en 2 méthodes je pense, c'est long là
-# mettre mes méthodes dans station, ou il faut faire une classe API avec des get/post ??
+# il faut que je transforme en vrai objet station (donc redéfinir les classes)
+
+
+def get_distinct_elements():
+    """
+    Récupère et retourne tous les éléments distincts du fichier XML compressé, convertis en instances de classe.
+
+    Args:
+        url (str): L'URL du fichier XML compressé.
+
+    Returns:
+        list: Liste d'instances de la classe Carburant.
+        list: Liste d'instances de la classe Services.
+    """
+    url = "https://donnees.roulez-eco.fr/opendata/instantane"
+    carburants_temp = set()
+    services_temp = set()
+
+    try:
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            zip_content = response.content
+
+            with zipfile.ZipFile(io.BytesIO(zip_content)) as zip_file:
+                xml_file_name = "PrixCarburants_instantane.xml"
+
+                if xml_file_name in zip_file.namelist():
+                    xml_content = zip_file.read(xml_file_name).decode("latin-1")
+                    root = ET.fromstring(xml_content)
+
+                    for pdv_element in root.findall(".//pdv"):
+                        for carburant_element in pdv_element.findall(".//prix"):
+                            carburants_temp.add(
+                                (
+                                    carburant_element.get("id"),
+                                    carburant_element.get("nom"),
+                                )
+                            )
+
+                        for service_element in pdv_element.findall(
+                            ".//services/service"
+                        ):
+                            services_temp.add(service_element.text)
+
+                else:
+                    print(
+                        f"Le fichier {xml_file_name} n'est pas présent dans le fichier ZIP."
+                    )
+
+        else:
+            print(
+                f"La requête a échoué avec le code de statut : {response.status_code}"
+            )
+
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur de requête : {e}")
+    except ET.ParseError:
+        print("Le contenu extrait n'est pas un fichier XML valide.")
+
+    # Convertir les éléments temporaires en instances de classe
+    carburants = [
+        TypeCarburant(carburant_id, carburant_nom)
+        for carburant_id, carburant_nom in carburants_temp
+    ]
+    services = [Services(nom) for nom in services_temp]
+
+    return carburants, services
+
+
+# Exemple d'utilisation
+
+carburants, services = get_distinct_elements()
+
+# Affichage des carburants et services
+print("Carburants distincts:")
+for carburant in carburants:
+    print(carburant)
+
+print("\nServices distincts:")
+for service in services:
+    print(service)
+
+
+def adresse_en_coordonnees(adresse):
+    geolocator = Nominatim(user_agent="géoloc")
+
+    location = geolocator.geocode(adresse)
+
+    if location:
+        latitude = location.latitude
+        longitude = location.longitude
+        return latitude, longitude
+    else:
+        return None
+
+
 def trouver_stations_par_filtres(
     n: int,
-    services_recherches: list,
-    carburants_recherches: list,
-    coor_utilisateur: Coordonnees,
+    services_recherches: str,
+    carburants_recherches: str,
+    latitude,
+    longitude
+    # coor_utilisateur: Coordonnees,
 ):
     # pour les services, mettre liste vide si aucun filtre dessus
     # pour les carburants, tous les mettre ["Gazole", "E10", "GPLc","SP98","SP95","E85"]
     # on pourra rajouter aussi le paramètre horaire après
+    coor_utilisateur = Coordonnees(0, latitude, longitude, "")
     url = "https://donnees.roulez-eco.fr/opendata/instantane"
+
+    debut_execution = datetime.datetime.now()
+    print(f"Début d'exécution : {debut_execution}")
+    services_recherches = split_input(services_recherches)
+    carburants_recherches = split_input(carburants_recherches)
 
     try:
         response = requests.get(url)
@@ -47,6 +147,7 @@ def trouver_stations_par_filtres(
                     latitude = []
                     longitude = []
                     cp = []
+                    adresse = []
 
                     # Parcourez tous les éléments <pdv> dans le XML
                     for pdv_element in root.findall(".//pdv"):
@@ -66,29 +167,30 @@ def trouver_stations_par_filtres(
                                 carburant in carburants_recherches
                                 for carburant in carburants
                             ):
+                                # on récupère les informations relatives à l'id et la localisation
+                                # de la station
                                 pdv_id = pdv_element.get("id")
                                 pdv_latitude = pdv_element.get("latitude")
                                 pdv_longitude = pdv_element.get("longitude")
                                 pdv_cp = pdv_element.get("cp")
+                                pdv_adresse = pdv_element.get("adresse")
                                 ids.append(pdv_id)
                                 latitude.append(pdv_latitude)
                                 longitude.append(pdv_longitude)
                                 cp.append(pdv_cp)
+                                adresse.append(pdv_adresse)
 
-                    # print(len(longitude))
-                    # print(len(ids))
-                    # coor_utilisateur = Coordonnees(0,48.6428477,2.7143162)
                     coor_info = [
                         Coordonnees(
                             pdv_id,
                             float(pdv_latitude) / 100000,
                             float(pdv_longitude) / 100000,
+                            pdv_adresse,
                         )
-                        for pdv_id, pdv_latitude, pdv_longitude in zip(
-                            ids, latitude, longitude
+                        for pdv_id, pdv_latitude, pdv_longitude, pdv_adresse in zip(
+                            ids, latitude, longitude, adresse
                         )
                     ]
-                    # print(coor_info)
 
                     dist = []
                     for x in coor_info:
@@ -114,7 +216,7 @@ def trouver_stations_par_filtres(
         print("Le contenu extrait n'est pas un fichier XML valide.")
 
 
-trouver_stations_par_filtres(5, [], ["Gazole"], Coordonnees(0, 48.6428477, 2.7143162))
+trouver_stations_par_filtres(5, "", "Gazole", 48.6428477, 2.7143162)
 
 
 def trouver_informations_par_id(id_station: int):
@@ -143,7 +245,18 @@ def trouver_informations_par_id(id_station: int):
                             "latitude": float(pdv_element.get("latitude")) / 100000,
                             "longitude": float(pdv_element.get("longitude")) / 100000,
                             "cp": pdv_element.get("cp"),
+                            "adresse": pdv_element.findtext(".//adresse"),
+                            "carburants": [],
                         }
+                        prix_elements = pdv_element.findall(".//prix")
+                        for prix_element in prix_elements:
+                            carburant_info = {
+                                "nom": prix_element.get("nom"),
+                                "id": prix_element.get("id"),
+                                "valeur": float(prix_element.get("valeur")),
+                            }
+                            station_info["carburants"].append(carburant_info)
+
                         return station_info
                     else:
                         return None

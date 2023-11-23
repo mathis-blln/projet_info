@@ -1,56 +1,53 @@
 from view.abstract_view import AbstractView
+<<<<<<< HEAD
 from view.session_view import Session
 from InquirerPy import prompt
 
 
 class StartView(AbstractView):
+=======
+from InquirerPy import prompt
+
+
+class StartView:
+>>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
     def __init__(self):
         self.__questions = [
             {
                 "type": "list",
                 "name": "choix",
-                "message": f"Hello {Session().user_name}",
+                "message": f"Bonjour",
                 "choices": [
-                    "Connection",
-                    "Battle",
-                    "List pokemons",
-                    "List attacks",
-                    "Create a pokemon",
-                    "Quit",
+                    "Connexion",
+                    "Inscription",
+                    "Faire une recherche",
+                    "Quitter",
                 ],
             }
         ]
 
-    def display_info(self):
-        with open("src/graphical_assets/banner.txt", "r", encoding="utf-8") as asset:
-            print(asset.read())
-
     def make_choice(self):
         reponse = prompt(self.__questions)
-        if reponse["choix"] == "Quit":
+        if reponse["choix"] == "Quitter":
             pass
 
-        elif reponse["choix"] == "Connection":
-            from view.connection_view import ConnectionView
+        elif reponse["choix"] == "Connexion":
+            from view.connexion_view import ConnexionView
 
-            return ConnectionView()
+            return ConnexionView()
 
-        elif reponse["choix"] == "Battle":
-            from view.battle_view import BattleView
+        elif reponse["choix"] == "Inscription":
+            from view.inscription_view import InscriptionView
 
-            return BattleView()
+            inscription_view = InscriptionView()
+            inscription_view.display_info()
+            return inscription_view.make_choice()
 
-        elif reponse["choix"] == "List pokemons":
-            from view.pokemon_list_view import PokemonListView
+        elif reponse["choix"] == "Faire une recherche":
+            from view.recherche_view import RechercheView
 
-            return PokemonListView()
-
-        elif reponse["choix"] == "List attacks":
-            from view.attack_list_view import AttackListView
-
-            return AttackListView()
-
-        elif reponse["choix"] == "Create a pokemon":
-            from view.create_pokemon_view import CreatePokemonView
-
+<<<<<<< HEAD
             return CreatePokemonView()
+=======
+            return RechercheView()
+>>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2

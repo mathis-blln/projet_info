@@ -1,7 +1,8 @@
 from Classe.Station import Station
 
+
 class Services:
-    def __init__(self, id_service, nom_service):
+    def __init__(self, nom_service):
         """
         Initialise une instance de la classe Services avec un identifiant de service et un nom de service.
 
@@ -14,15 +15,13 @@ class Services:
             comme un code, et nom_service pourrait être une chaîne de caractères décrivant le service,
             par exemple "Lavage de voiture" ou "Cafétéria".
         """
-        self.id_service = id_service
         self.nom_service = nom_service
-    
-    def __str__(self):
-        return f"ID utilisateur: {self._id_utilisateur}, mot de passe : {self._mot_de_passe}"
 
-         """
+    def __str__(self):
+        """
         Retourne une représentation sous forme de chaîne de caractères de l'objet Utilisateur.
 
         Returns:
             str: Une chaîne de caractères représentant l'ID de l'utilisateur et son mot de passe.
-        """     
+        """
+        return f"service : {self.nom_service}"

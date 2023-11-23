@@ -1,14 +1,7 @@
-import requests
-import zipfile
-import io
-import xml.etree.ElementTree as ET
-from Classe.Coordonnees import Coordonnees
-from helper import trier, selectionner_n_premiers
-import json
-from geopy.geocoders import Nominatim
 from InquirerPy import inquirer
-from PROJET_INFO.API.importation_toutes_donnees import trouver_stations_par_filtres
-from PROJET_INFO.API.convertion import adresse_en_coordonnees 
+from API.importation_toutes_donnees import trouver_stations_par_filtres
+from API.convertion import adresse_en_coordonnees
+
 
 class RechercheView:
     def __init__(self):
@@ -37,13 +30,12 @@ class RechercheView:
                     {"name": "Services réparation / entretien"},
                     {"name": "Location de véhicule"},
                     {"name": "Wifi"},
-                    {"name":"Toilettes publiques"},
-                    {"name":"Boutique non alimentaire"},
+                    {"name": "Toilettes publiques"},
+                    {"name": "Boutique non alimentaire"},
                     {"name": "Aire de camping-cars"},
                     {"name": "Espace bébé"},
                     {"name": "Douches"},
-                    {"name":"Restauration sur place"}
-
+                    {"name": "Restauration sur place"},
                 ],
             },
         ]
