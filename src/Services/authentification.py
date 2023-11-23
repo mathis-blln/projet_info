@@ -3,7 +3,6 @@ from DAO.authentificationDAO import AuthentificationDAO
 
 # faire une fonction "changer_mdp" si il y arrive pas
 class Authentification:
-<<<<<<< HEAD
     def verifier(self, id_user, mdp):
         # detecte = 0
         # while not detecte:
@@ -26,28 +25,3 @@ class Authentification:
 
 # if __name__ == "__main__":
 #     Authentification().verifier()
-=======
-    def verifier(self):
-        detecte = 0
-        while not detecte:
-            id_user = input("Votre id: ")
-            mdp = input("Votre mdp: ")
-            verify = AuthentificationDAO().verification(id_user, mdp)
-            if not verify:
-                print("-----------------------------------")
-                print(
-                    "Le mot de passe rentré ne correspond pas à l'identifiant choisi."
-                )
-                print("Veuillez réessayer.")
-                print("-----------------------------------")
-            else:
-                detecte = 1
-                print("-----------------------------------")
-                print("Connexion réussie.")
-                print("-----------------------------------")
-                pass
-
-
-if __name__ == "__main__":
-    Authentification().verifier()
->>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
