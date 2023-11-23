@@ -1,4 +1,4 @@
-from projet_info.DAO.db_connection import DBConnection
+from DAO.db_connection import DBConnection
 
 
 class AuthentificationDAO:
@@ -9,9 +9,8 @@ class AuthentificationDAO:
                     "SELECT *                                       "
                     "  FROM projet.utilisateur                      "
                     " WHERE id_utilisateur =%(id_utilisateur)s AND mdp=%(mdp)s   ",
-                    {"id_utilisateur": id_utilisateur,
-                     "mdp": mdp},
-                 )
+                    {"id_utilisateur": id_utilisateur, "mdp": mdp},
+                )
                 res = cursor.fetchone()
 
             if res is None:

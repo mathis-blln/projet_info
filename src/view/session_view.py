@@ -1,4 +1,4 @@
-from singleton_view import Singleton
+from view.singleton_view import Singleton
 
 
 class Session(metaclass=Singleton):
