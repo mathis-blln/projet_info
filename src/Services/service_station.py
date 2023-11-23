@@ -273,7 +273,7 @@ class StationsService:
         resultats = []
 
         for id_station in liste:
-            informations_station = trouver_informations_par_id(id_station)
+            informations_station = self.trouver_informations_par_id(id_station)
 
             if informations_station:
                 resultats.append(informations_station)
@@ -282,7 +282,6 @@ class StationsService:
         return json.dumps(resultats, indent=2)
 
 
-"""
 id_station_recherche = 74800004
 r = StationsService()
 resultat = r.trouver_informations_par_id(id_station_recherche)
@@ -290,4 +289,5 @@ if resultat:
     print(resultat)
 else:
     print("Aucune station trouvée avec l'identifiant", id_station_recherche)
-"""
+liste_station = [74800004, 77390005, 77390003]
+print(r.info_stations_preferees(liste_station))
