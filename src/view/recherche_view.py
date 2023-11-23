@@ -1,11 +1,3 @@
-import requests
-import zipfile
-import io
-import xml.etree.ElementTree as ET
-from Classe.Coordonnees import Coordonnees
-from helper import trier, selectionner_n_premiers
-import json
-from geopy.geocoders import Nominatim
 from InquirerPy import inquirer
 from API.importation_toutes_donnees import trouver_stations_par_filtres
 from API.convertion import adresse_en_coordonnees

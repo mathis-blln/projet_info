@@ -16,7 +16,7 @@ class InscriptionView(AbstractView):
                 "type": "password",
                 "name": "mot de passe",
                 "message": "Entrez votre mot de passe",
-                "mask": "*",
+                # "masked": True,
             },
         ]
 
