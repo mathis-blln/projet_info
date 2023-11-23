@@ -39,8 +39,8 @@ consulter_listes_service = ConsulterListesFavoris()
 # List all favorite lists
 @app.get("/listesFav/{id_user}", response_model=PyList[Liste])
 async def get_listes_favorites(id_user):
-    consulter_listes_service = ConsulterListesFavoris()
-    listes = consulter_listes_service.consulter_listes2(id_user)
+    consulter = ConsulterListesFavoris()
+    listes = consulter.consulter_listes2(id_user)
     if not listes:
         raise HTTPException(status_code=404, detail="Aucune liste de favoris trouvée.")
     return listes
