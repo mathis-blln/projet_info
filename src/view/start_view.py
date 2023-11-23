@@ -1,16 +1,8 @@
 from view.abstract_view import AbstractView
-<<<<<<< HEAD
-from view.session_view import Session
-from InquirerPy import prompt
-
-
-class StartView(AbstractView):
-=======
 from InquirerPy import prompt
 
 
 class StartView:
->>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
     def __init__(self):
         self.__questions = [
             {
