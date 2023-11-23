@@ -1,16 +1,10 @@
 from view.abstract_view import AbstractView
-<<<<<<< HEAD
 from view.session_view import Session
 from InquirerPy import prompt
-
-
-class StartView(AbstractView):
-=======
-from InquirerPy import prompt
+from view.connexion_view import ConnexionView
 
 
 class StartView:
->>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
     def __init__(self):
         self.__questions = [
             {
@@ -32,22 +26,21 @@ class StartView:
             pass
 
         elif reponse["choix"] == "Connexion":
-            from view.connexion_view import ConnexionView
-
-            return ConnexionView()
+            connexion_view = ConnexionView()
+            connexion_view.display_info()
+            connexion_view.make_choice()
 
         elif reponse["choix"] == "Inscription":
             from view.inscription_view import InscriptionView
 
             inscription_view = InscriptionView()
             inscription_view.display_info()
-            return inscription_view.make_choice()
+            result = inscription_view.make_choice()
+            # Vérifie si l'inscription a été réussie et renvoie la vue de connexion si c'est le cas
+            if result == "Inscription réussie !":
+                return ConnexionView()
 
         elif reponse["choix"] == "Faire une recherche":
             from view.recherche_view import RechercheView
 
-<<<<<<< HEAD
-            return CreatePokemonView()
-=======
             return RechercheView()
->>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2

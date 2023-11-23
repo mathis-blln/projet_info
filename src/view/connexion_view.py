@@ -1,16 +1,9 @@
 from InquirerPy import prompt
 from view.abstract_view import AbstractView
-<<<<<<< HEAD
 from view.session_view import Session
 from DAO.inscriptionDAO import InscriptionDAO
 from Services.authentification import Authentification
-from view.inscription_view import InscriptionView
 from view.menu_view import MenuView
-=======
-from view.session import Session
-from DAO.InscriptionDAO import InscriptionDAO
-from Classe.Authentification import Authentification
->>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
 
 
 class ConnexionView(AbstractView):
@@ -24,13 +17,8 @@ class ConnexionView(AbstractView):
             {
                 "type": "password",
                 "name": "mot de passe",
-<<<<<<< HEAD
                 "message": "Entrez votre mot de passe: ",
                 # "mask": "*",  # Cache le mot de passe avec les caractères '*'
-=======
-                "message": "Entrez votre mot de passe",
-                "mask": "*",  # Cache le mot de passe avec les caractères '*'
->>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
             },
         ]
 
@@ -55,7 +43,6 @@ class ConnexionView(AbstractView):
                 #     Session().mdp_utilisateur = user_password
                 #     from view.start_view import StartView
 
-<<<<<<< HEAD
                 #     return StartView()
                 print("-----------------------------------")
                 print(
@@ -70,8 +57,9 @@ class ConnexionView(AbstractView):
                 if choix == "0":
                     break
                 elif choix == "2":
-                    InscriptionView().display_info()
-                    InscriptionView().make_choice()
+                    inscription_view = InscriptionView()
+                    inscription_view.display_info()
+                    inscription_view.make_choice()
                     print("-----------------------------------")
                 else:
                     print("-----------------------------------")
@@ -82,6 +70,7 @@ class ConnexionView(AbstractView):
                 print("-----------------------------------")
                 print("Connexion réussite.")
                 print("-----------------------------------")
+                menu_view = MenuView()
                 MenuView().display_info()
                 MenuView().make_choice()
 
@@ -89,23 +78,3 @@ class ConnexionView(AbstractView):
             #     "Appuyez sur Entrée pour retourner à la vue de connexion"
             # )  # Attente de l'entrée utilisateur
             # return ConnexionView()  # Retourne automatiquement à la vue de connexion
-=======
-        # Vérification dans la base de données
-        auth_instance = Authentification(
-            user_id, user_password
-        )  # Crée une instance d'Authentification avec les entrées de l'utilisateur
-
-        user = InscriptionDAO().get_user_by_id(user_id)
-        if user and user.compare(user_id, user_password):
-            Session().id_utilisateur = user_id
-            Session().mdp_utilisateur = user_password
-            from view.start_view import StartView
-
-            return StartView()
-
-        print("Identifiant ou mot de passe incorrect")
-        input(
-            "Appuyez sur Entrée pour retourner à la vue de connexion"
-        )  # Attente de l'entrée utilisateur
-        return ConnexionView()  # Retourne automatiquement à la vue de connexion
->>>>>>> ee9645d046912deac142db99fa25d3cd86cf67e2
