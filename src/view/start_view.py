@@ -1,12 +1,19 @@
-class StartView(AbstractView):
+from view.abstract_view import AbstractView
+from InquirerPy import prompt
+
+
+class StartView:
     def __init__(self):
         self.__questions = [
             {
                 "type": "list",
                 "name": "choix",
-                "message": f"Hello {Session().user_name}",
+                "message": f"Bonjour",
                 "choices": [
-                    "Connexion" "Inscription" "Faire une recherche" "Quitter",
+                    "Connexion",
+                    "Inscription",
+                    "Faire une recherche",
+                    "Quitter",
                 ],
             }
         ]
@@ -24,7 +31,9 @@ class StartView(AbstractView):
         elif reponse["choix"] == "Inscription":
             from view.inscription_view import InscriptionView
 
-            return InscriptionView()
+            inscription_view = InscriptionView()
+            inscription_view.display_info()
+            return inscription_view.make_choice()
 
         elif reponse["choix"] == "Faire une recherche":
             from view.recherche_view import RechercheView

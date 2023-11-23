@@ -16,4 +16,4 @@ def adresse_en_coordonnees(adresse):
         return None
 
 
-print(adresse_en_coordonnees("la renouette, Laillé"))
+# print(adresse_en_coordonnees("la renouette, Laillé"))
