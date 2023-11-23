@@ -6,8 +6,8 @@ from Classe.Coordonnees import Coordonnees
 from Classe.TypeCarburant import TypeCarburant
 from Classe.Service import Services
 from helper import *
+from geopy.geocoders import Nominatim
 import datetime
-
 # from flask import jsonify
 import json
 
@@ -94,6 +94,20 @@ for carburant in carburants:
 print("\nServices distincts:")
 for service in services:
     print(service)
+
+def adresse_en_coordonnees(adresse):
+    geolocator = Nominatim(
+        user_agent="géoloc"
+    ) 
+
+    location = geolocator.geocode(adresse)
+
+    if location:
+        latitude = location.latitude
+        longitude = location.longitude
+        return latitude, longitude
+    else:
+        return None
 
 
 def trouver_stations_par_filtres(
