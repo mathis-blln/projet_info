@@ -3,6 +3,7 @@ from abstract_view import AbstractView
 from session_view import Session
 from DAO.inscriptionDAO import InscriptionDAO
 
+
 class InscriptionView(AbstractView):
     def __init__(self):
         self.__questions = [
@@ -16,11 +17,13 @@ class InscriptionView(AbstractView):
                 "name": "mot de passe",
                 "message": "Entrez votre mot de passe",
                 "mask": "*",
-            }
+            },
         ]
 
     def display_info(self):
-        print("Bienvenue ! Veuillez vous inscrire en choisissant un identifiant et un mot de passe")
+        print(
+            "Bienvenue ! Veuillez vous inscrire en choisissant un identifiant et un mot de passe"
+        )
 
     def make_choice(self):
         answers = prompt(self.__questions)
@@ -39,6 +42,7 @@ class InscriptionView(AbstractView):
             Session().id_utilisateur = user_id
             Session().mdp_utilisateur = user_password
             from view.start_view import StartView
+
             return StartView()
         else:
             print("Echec de l'inscription.")

@@ -1,4 +1,4 @@
-from projet_info.DAO.inscriptionDAO import InscriptionDAO
+from DAO.inscriptionDAO import InscriptionDAO
 
 # from projet_info.Classe.Utilisateur import Utilisateur
 

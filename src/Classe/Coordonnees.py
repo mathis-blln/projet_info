@@ -2,10 +2,11 @@ import math
 
 
 class Coordonnees:
-    def __init__(self, id_station, latitude, longitude):
+    def __init__(self, id_station, latitude, longitude, adresse):
         self.latitude = latitude
         self.longitude = longitude
         self.id_station = id_station
+        self.adresse = adresse
 
     def __str__(self) -> str:
         return f"la station {self.id_station} a pour coordonnees (latitude={self.latitude}, longitude={self.longitude})"

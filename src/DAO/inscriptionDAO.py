@@ -1,6 +1,6 @@
-from projet_info.utils.singleton import Singleton
-from projet_info.DAO.db_connection import DBConnection
-from projet_info.Classe.Utilisateur import Utilisateur
+from utils.singleton import Singleton
+from DAO.db_connection import DBConnection
+from Classe.Utilisateur import Utilisateur
 
 
 class InscriptionDAO(metaclass=Singleton):
@@ -8,10 +8,9 @@ class InscriptionDAO(metaclass=Singleton):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "SELECT COUNT(*)       "
-                    "FROM projet.utilisateur             ",
+                    "SELECT COUNT(*)       " "FROM projet.utilisateur             ",
                 )
-                res = cursor.fetchone()          
+                res = cursor.fetchone()
             if res is not None:
                 return int(res["count"])
             else:
@@ -34,7 +33,9 @@ class InscriptionDAO(metaclass=Singleton):
                 )
                 res = cursor.fetchone()
                 if res is not None:
-                    user = Utilisateur(res["id_utilisateur"], res["nom_utilisateur"], res["mdp"]) 
+                    user = Utilisateur(
+                        res["id_utilisateur"], res["nom_utilisateur"], res["mdp"]
+                    )
                     return user
                 else:
                     print("Echec d'inscription.")
@@ -42,4 +43,8 @@ class InscriptionDAO(metaclass=Singleton):
 
 if __name__ == "__main__":
     moi = InscriptionDAO().add_user("Mohamed", "0000")
-    print("Vos identifiants sont ({},{},{}).".format(moi._id_utilisateur, moi._nom_utilisateur, moi._mot_de_passe))
+    print(
+        "Vos identifiants sont ({},{},{}).".format(
+            moi._id_utilisateur, moi._nom_utilisateur, moi._mot_de_passe
+        )
+    )

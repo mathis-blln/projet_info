@@ -12,8 +12,7 @@ import datetime
 import json
 
 # il faut que j'utilise les classes dans le premier code pour avoir directement les stations à la fin
-# découper en 2 méthodes je pense, c'est long là
-# faire deux fonctions pour récupérer les différents services et carburant
+# il faut que je transforme en vrai objet station (donc redéfinir les classes)
 
 
 def get_distinct_elements():
@@ -95,20 +94,27 @@ for carburant in carburants:
 print("\nServices distincts:")
 for service in services:
     print(service)
-"""
+
+
 def trouver_stations_par_filtres(
     n: int,
-    services_recherches: list,
-    carburants_recherches: list,
-    coor_utilisateur: Coordonnees,
+    services_recherches: str,
+    carburants_recherches: str,
+    latitude,
+    longitude
+    # coor_utilisateur: Coordonnees,
 ):
     # pour les services, mettre liste vide si aucun filtre dessus
     # pour les carburants, tous les mettre ["Gazole", "E10", "GPLc","SP98","SP95","E85"]
     # on pourra rajouter aussi le paramètre horaire après
-    # faut que j'utilise la classe service enft
+    coor_utilisateur = Coordonnees(0, latitude, longitude, "")
     url = "https://donnees.roulez-eco.fr/opendata/instantane"
+
     debut_execution = datetime.datetime.now()
     print(f"Début d'exécution : {debut_execution}")
+    services_recherches = split_input(services_recherches)
+    carburants_recherches = split_input(carburants_recherches)
+
     try:
         response = requests.get(url)
 
@@ -127,6 +133,7 @@ def trouver_stations_par_filtres(
                     latitude = []
                     longitude = []
                     cp = []
+                    adresse = []
 
                     # Parcourez tous les éléments <pdv> dans le XML
                     for pdv_element in root.findall(".//pdv"):
@@ -146,29 +153,30 @@ def trouver_stations_par_filtres(
                                 carburant in carburants_recherches
                                 for carburant in carburants
                             ):
+                                # on récupère les informations relatives à l'id et la localisation
+                                # de la station
                                 pdv_id = pdv_element.get("id")
                                 pdv_latitude = pdv_element.get("latitude")
                                 pdv_longitude = pdv_element.get("longitude")
                                 pdv_cp = pdv_element.get("cp")
+                                pdv_adresse = pdv_element.get("adresse")
                                 ids.append(pdv_id)
                                 latitude.append(pdv_latitude)
                                 longitude.append(pdv_longitude)
                                 cp.append(pdv_cp)
+                                adresse.append(pdv_adresse)
 
-                    # print(len(longitude))
-                    # print(len(ids))
-                    # coor_utilisateur = Coordonnees(0,48.6428477,2.7143162)
                     coor_info = [
                         Coordonnees(
                             pdv_id,
                             float(pdv_latitude) / 100000,
                             float(pdv_longitude) / 100000,
+                            pdv_adresse,
                         )
-                        for pdv_id, pdv_latitude, pdv_longitude in zip(
-                            ids, latitude, longitude
+                        for pdv_id, pdv_latitude, pdv_longitude, pdv_adresse in zip(
+                            ids, latitude, longitude, adresse
                         )
                     ]
-                    # print(coor_info)
 
                     dist = []
                     for x in coor_info:
@@ -194,7 +202,7 @@ def trouver_stations_par_filtres(
         print("Le contenu extrait n'est pas un fichier XML valide.")
 
 
-trouver_stations_par_filtres(5, [], ["Gazole"], Coordonnees(0, 48.6428477, 2.7143162))
+trouver_stations_par_filtres(5, "", "Gazole", 48.6428477, 2.7143162)
 
 
 def trouver_informations_par_id(id_station: int):
@@ -223,6 +231,7 @@ def trouver_informations_par_id(id_station: int):
                             "latitude": float(pdv_element.get("latitude")) / 100000,
                             "longitude": float(pdv_element.get("longitude")) / 100000,
                             "cp": pdv_element.get("cp"),
+                            "adresse": pdv_element.findtext(".//adresse"),
                         }
                         return station_info
                     else:
@@ -270,4 +279,3 @@ else:
 
 liste_station = [74800004, 77390005, 77390003]
 print(info_stations_preferees(liste_station))
-"""

@@ -17,3 +17,12 @@ def element_distinct(liste: list):
             elements_distincts.append(element)
 
     print(elements_distincts)
+
+
+def split_input(user_input):
+    if user_input == "":
+        return []
+    else:
+        # Diviser la chaîne en une liste en utilisant la virgule comme séparateur
+        elements_list = [element.strip() for element in user_input.split(",")]
+        return elements_list
