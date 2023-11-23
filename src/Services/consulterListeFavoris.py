@@ -5,6 +5,7 @@ from Classe import Liste
 
 
 class ConsulterListesFavoris:
+    """
     def consulter_listes(self, id_user) -> list[Liste]:
         resultat = ListeDAO().find_all_listes(id_user)
         if len(resultat):
@@ -23,8 +24,9 @@ class ConsulterListesFavoris:
 
         print("-----------------------------------")
         return resultat
+    """
 
-    def consulter_listes2(self, id_user) -> list[Liste]:
+    def consulter_listes(self, id_user) -> list[Liste]:
         resultat = ListeDAO().find_all_listes(id_user)
         self.afficher_listes(resultat)
         return resultat  # Retourne les listes obtenues
@@ -43,4 +45,4 @@ class ConsulterListesFavoris:
 
 if __name__ == "__main__":
     x = input("Entrer votre id: ")
-    y = ConsulterListesFavoris().consulter_listes2(x)
+    y = ConsulterListesFavoris().consulter_listes(x)
