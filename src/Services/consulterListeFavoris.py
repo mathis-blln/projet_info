@@ -5,7 +5,7 @@ from Classe import Liste
 
 
 class ConsulterListesFavoris:
-    def toutes_les_listes(self, id_user) -> list[Liste]:
+    def consulter_listes(self, id_user) -> list[Liste]:
         resultat = ConsulterListeDAO().find_all_listes(id_user)
         if len(resultat):
             print("Votre listes sont:")
@@ -26,4 +26,4 @@ class ConsulterListesFavoris:
 
 if __name__ == "__main__":
     x = input("Entrer votre id: ")
-    ConsulterListesFavoris().toutes_les_listes(x)
+    ConsulterListesFavoris().consulter_listes(x)
