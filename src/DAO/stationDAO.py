@@ -1,7 +1,7 @@
 from DAO.db_connection import DBConnection
 
 
-class AjouterstationDAO:
+class StationDAO:
     def add_id_station(self, id_liste, id_stations):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
@@ -23,6 +23,15 @@ class AjouterstationDAO:
                 )
                 result = cursor.fetchall()
                 return [row["id_stations"] for row in result]
+
+    def remove_id_station(self, id_liste, id_stations):
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM projet.contenu_liste "
+                    "WHERE id_liste = %(id_liste)s AND id_stations = %(id_stations)s",
+                    {"id_liste": id_liste, "id_stations": id_stations},
+                )
 
     # def creer_station(self, id_station, adresse, ville):
     #     with DBConnection().connection as connection:
