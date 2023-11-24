@@ -1,8 +1,8 @@
-from view.abstract_view import AbstractView
-from view.session_view import Session
 from InquirerPy import prompt
 from view.connexion_view import ConnexionView
 from view.inscription_view import InscriptionView
+
+# from view.recherche_view import RechercheView
 
 
 class StartView:
@@ -22,21 +22,28 @@ class StartView:
         ]
 
     def make_choice(self):
-        reponse = prompt(self.__questions)
-        if reponse["choix"] == "Quitter":
-            pass
-        elif reponse["choix"] == "Connexion":
-            connexion_view = ConnexionView()
-            connexion_view.display_info()
-            connexion_view.make_choice()
-        elif reponse["choix"] == "Inscription":
-            inscription_view = InscriptionView()
-            inscription_view.display_info()
-            user_choice = inscription_view.make_choice()
-            if isinstance(
-                user_choice, ConnexionView
-            ):  # Vérification si la réponse est de type ConnexionView
-                return user_choice  # Si oui, retournez directement la vue de connexion
-            return inscription_view
-        elif reponse["choix"] == "Faire une recherche":
-            pass  # Ajoutez la logique pour la recherche ici
+        while True:
+            response = prompt(self.__questions)
+            if response["choix"] == "Quitter":
+                break
+            elif response["choix"] == "Connexion":
+                connexion_view = ConnexionView()
+                connexion_view.display_info()
+                return connexion_view.make_choice()
+            elif response["choix"] == "Inscription":
+                inscription_view = InscriptionView()
+                inscription_view.display_info()
+                choice = (
+                    inscription_view.make_choice()
+                )  # Obtenir le choix de la vue d'inscription
+                if (
+                    choice == "Connexion"
+                ):  # Redirection vers la vue de connexion si l'inscription est réussie
+                    connexion_view = ConnexionView()
+                    connexion_view.display_info()
+                    return connexion_view.make_choice()
+            # Gérer d'autres choix ici si nécessaire
+            # elif response["choix"] == "Faire une recherche":
+            #   recherche_view = RechercheView()
+            #  recherche_view.display_info()
+            # return recherche_view.make_choice()
