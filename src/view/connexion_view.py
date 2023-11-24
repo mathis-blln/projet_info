@@ -9,12 +9,12 @@ class ConnexionView(AbstractView):
         self.__questions = [
             {
                 "type": "input",
-                "name": "identifiant",
+                "name": "nom_utilisateur",  # Modifier ici pour correspondre au nom dans le formulaire
                 "message": "Entrez votre nom d'utilisateur ",
             },
             {
                 "type": "password",
-                "name": "mot de passe",
+                "name": "mot_de_passe",  # Modifier ici pour correspondre au nom dans le formulaire
                 "message": "Entrez votre mot de passe: ",
             },
         ]
@@ -25,11 +25,16 @@ class ConnexionView(AbstractView):
     def make_choice(self):
         while True:
             answers = prompt(self.__questions)
-            user_id = answers["identifiant"]
-            user_password = answers["mot de passe"]
+            user_id = answers[
+                "nom_utilisateur"
+            ]  # Utiliser le bon nom de clé pour récupérer le nom d'utilisateur
+            user_password = answers[
+                "mot_de_passe"
+            ]  # Utiliser le bon nom de clé pour récupérer le mot de passe
 
             # Vérification des identifiants par rapport à ceux stockés lors de l'inscription
             auth = Authentification().verifier(user_id, user_password)
+
             if not auth:
                 print("Le nom d'utilisateur ou le mot de passe est incorrect.")
                 print("Retour au menu principal...")
