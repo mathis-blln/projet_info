@@ -21,7 +21,7 @@ CREATE TABLE projet.stations (
 DROP TABLE IF EXISTS projet.utilisateur CASCADE ;
 
 CREATE TABLE projet.utilisateur (
-    id_utilisateur text PRIMARY KEY,
+    id_utilisateur INT PRIMARY KEY,
     nom_utilisateur text NOT NULL,
     mdp text NOT NULL
 );
