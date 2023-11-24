@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from InquirerPy import prompt
 import requests
 
@@ -14,16 +15,31 @@ from DAO.inscriptionDAO import InscriptionDAO
 # from DAO.MenuDAO import (
 #     MenuDAO,
 # )  # Créez votre propre DAO pour gérer les fonctionnalités du menu
+=======
+import sys
+
+sys.path.insert(0, "\\filer-eleves2\id2315\projet_info\projet_info")
+from projet_info.DAO.InscriptionDAO import InscriptionDAO
+
+from InquirerPy import inquirer
+from abstract_view import AbstractView
+from session_view import Session
+from projet_info.DAO.InscriptionDAO import InscriptionDAO
+from projet_info.DAO.MenuDAO import (
+    MenuDAO,
+)  # Créez votre propre DAO pour gérer les fonctionnalités du menu
+>>>>>>> 534726f972cf1a73deee3928a4f090509d351112
 
 
 class MenuView(AbstractView):
     def __init__(self):
         self.__questions = [
             {
-                "type": "list",
+                "type": "select",
                 "name": "choice",
-                "message": "Que voulez-vous faire ?\n-----------------------------------",
+                "message": "Que voulez-vous faire ?",
                 "choices": [
+<<<<<<< HEAD
                     # "Effectuer une recherche",
                     # "Consulter mes stations favorites",
                     # "Modifier/Supprimer mes stations favorites",
@@ -35,17 +51,25 @@ class MenuView(AbstractView):
                     {"name": "Déconnexion", "value": "5"},
                 ],
             },
+=======
+                    {"name": "Effectuer une recherche"},
+                    {"name": "Consulter mes stations favorites"},
+                    {"name": "Modifier/Supprimer mes stations favorites"},
+                    {"name": "Déconnexion"},
+                ],
+            }
+>>>>>>> 534726f972cf1a73deee3928a4f090509d351112
         ]
 
     def display_info(self):
         print("Bienvenue dans le menu !")
-        print("-----------------------------------")
 
     def make_choice(self):
         while True:
-            answers = prompt(self.__questions)
+            answers = inquirer.prompt(self.__questions)
             choice = answers["choice"]
 
+<<<<<<< HEAD
             if choice == "1":
                 # Appel à l'API pour obtenir toutes les listes favorites
                 response = requests.get("http://127.0.0.1/listesFav/")
@@ -70,6 +94,20 @@ class MenuView(AbstractView):
             elif choice == "3":
                 # Ajoutez le code pour l'option "Modifier/Supprimer mes stations favorites"
                 pass
+=======
+            if choice == "Effectuer une recherche":
+                # Ajoutez le code pour l'option "Effectuer une recherche"
+                pass
+            elif choice == "Consulter mes stations favorites":
+                # Ajoutez le code pour l'option "Consulter mes stations favorites"
+                pass
+            elif choice == "Modifier/Supprimer mes stations favorites":
+                # Ajoutez le code pour l'option "Modifier/Supprimer mes stations favorites"
+                pass
+            elif choice == "Déconnexion":
+                Session().clear_session()  # Efface les informations de session
+                from view.connexion_view import ConnexionView
+>>>>>>> 534726f972cf1a73deee3928a4f090509d351112
 
             elif choice == "4":
                 pass

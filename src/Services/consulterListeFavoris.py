@@ -5,10 +5,11 @@ from Classe import Liste
 
 
 class ConsulterListesFavoris:
+    """
     def consulter_listes(self, id_user) -> list[Liste]:
         resultat = ListeDAO().find_all_listes(id_user)
         if len(resultat):
-            print("Votre listes sont:")
+            print("Vos listes sont:")
             print("-----------------------------------")
             for i in range(len(resultat)):
                 print(
@@ -22,8 +23,26 @@ class ConsulterListesFavoris:
             print("Aucune liste de favoris trouvée.")
 
         print("-----------------------------------")
+        return resultat
+    """
+
+    def consulter_listes(self, id_user) -> list[Liste]:
+        resultat = ListeDAO().find_all_listes(id_user)
+        self.afficher_listes(resultat)
+        return resultat  # Retourne les listes obtenues
+
+    def afficher_listes(self, listes):
+        if len(listes):
+            print("Vos listes sont:")
+            print("-----------------------------------")
+            for i, liste in enumerate(listes):
+                print(f"Liste {i + 1}: {liste}")
+        else:
+            print("-----------------------------------")
+            print("Aucune liste de favoris trouvée.")
+        print("-----------------------------------")
 
 
 if __name__ == "__main__":
     x = input("Entrer votre id: ")
-    ConsulterListesFavoris().consulter_listes(x)
+    y = ConsulterListesFavoris().consulter_listes(x)

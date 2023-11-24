@@ -14,7 +14,7 @@ class StationDAO:
                 res = cursor.fetchone()
                 return [res["id_liste"], res["id_stations"]]
 
-    def get_id_stations_for_liste(self, id_liste):
+    def get_id_stations_from_liste(self, id_liste):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(

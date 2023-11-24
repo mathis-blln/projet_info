@@ -1,7 +1,11 @@
 from view.abstract_view import AbstractView
+<<<<<<< HEAD
 from view.session_view import Session
 from InquirerPy import prompt
 from view.connexion_view import ConnexionView
+=======
+from InquirerPy import prompt
+>>>>>>> 534726f972cf1a73deee3928a4f090509d351112
 
 
 class StartView:
