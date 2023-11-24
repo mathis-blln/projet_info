@@ -9,7 +9,7 @@ class StationDAO:
                     "INSERT INTO projet.contenu_liste (id_liste, id_stations)"
                     "VALUES (%(id_liste)s, %(id_stations)s)"
                     "RETURNING id_liste, id_stations",
-                    {"id_liste": id_liste, "id_stations": id_stations},
+                    {"id_liste": int(id_liste), "id_stations": id_stations},
                 )
                 res = cursor.fetchone()
                 return [res["id_liste"], res["id_stations"]]
@@ -20,7 +20,7 @@ class StationDAO:
                 cursor.execute(
                     "DELETE FROM projet.contenu_liste "
                     "WHERE id_liste = %(id_liste)s AND id_stations = %(id_stations)s",
-                    {"id_liste": id_liste, "id_stations": id_stations},
+                    {"id_liste": int(id_liste), "id_stations": id_stations},
                 )
                 connection.commit()
 
@@ -29,7 +29,7 @@ class StationDAO:
             with connection.cursor() as cursor:
                 cursor.execute(
                     "SELECT id_stations FROM projet.contenu_liste WHERE id_liste = %(id_liste)s",
-                    {"id_liste": id_liste},
+                    {"id_liste": int(id_liste)},
                 )
                 result = cursor.fetchall()
                 return [row["id_stations"] for row in result]

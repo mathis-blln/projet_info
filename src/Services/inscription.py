@@ -9,7 +9,7 @@ class Inscription:
         inscrit = InscriptionDAO().add_user(nom_utilsateur, mdp)
         print("-----------------------------------")
         print(
-            "Bienvenu.\nVos identifiants\nID: {}\nNom: {}\nPassword: {}.".format(
+            "Bienvenue.\nVos identifiants\nID: {}\nNom: {}\nPassword: {}.".format(
                 inscrit._id_utilisateur, inscrit._nom_utilisateur, inscrit._mot_de_passe
             )
         )
@@ -17,4 +17,4 @@ class Inscription:
 
 
 if __name__ == "__main__":
-    Inscription().inscrire("Utilisateur", "Mot de passe")
+    Inscription().inscrire("mathis5", "po0o0o")

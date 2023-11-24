@@ -21,7 +21,7 @@ CREATE TABLE projet.stations (
 DROP TABLE IF EXISTS projet.utilisateur CASCADE ;
 
 CREATE TABLE projet.utilisateur (
-    id_utilisateur text PRIMARY KEY,
+    id_utilisateur INT PRIMARY KEY,
     nom_utilisateur text NOT NULL,
     mdp text NOT NULL
 );
@@ -33,7 +33,7 @@ CREATE TABLE projet.utilisateur (
 DROP TABLE IF EXISTS projet.listes CASCADE ;
 
 CREATE TABLE projet.listes (
-    id_liste text PRIMARY KEY,
+    id_liste SERIAL PRIMARY KEY,
     id_utilisateur text REFERENCES projet.utilisateur(id_utilisateur),
     nom_liste text UNIQUE NOT NULL
 );
@@ -46,6 +46,6 @@ CREATE TABLE projet.listes (
 DROP TABLE IF EXISTS projet.contenu_liste CASCADE ;
 
 CREATE TABLE projet.contenu_liste (
-    id_liste text REFERENCES projet.listes(id_liste),
+    id_liste SERIAL REFERENCES projet.listes(id_liste),
     id_stations text 
 );

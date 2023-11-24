@@ -1,8 +1,9 @@
-from DAO.creerListeDAO import CreerlisteDAO
+from DAO.listeDAO import ListeDAO
 
 # from projet_info.DAO.ajouterstationDAO import AjouterstationDAO
 
 
+# pas utiliser
 class Creerliste:
     def ajouter_liste(self, id_utilisateur, nom_liste):
         """
@@ -12,7 +13,7 @@ class Creerliste:
         operation_reussie = False
         while not operation_reussie:
             try:
-                liste = CreerlisteDAO().add_liste(id_utilisateur, nom_liste)
+                liste = ListeDAO().add_liste(id_utilisateur, nom_liste)
             except Exception:
                 print("-----------------------------------")
                 print("Une liste avec le même nom existe déjà, veuillez réessayer.")
@@ -27,7 +28,5 @@ class Creerliste:
 
 
 if __name__ == "__main__":
-    id = input("Votre id: ")
-    nom = input("nom: ")
-    Creerliste().ajouter_liste(id, nom)
+    Creerliste().ajouter_liste(3, "brest")
     # AjouterstationDAO().creer_station("43363365", "Italy", "Versailles")

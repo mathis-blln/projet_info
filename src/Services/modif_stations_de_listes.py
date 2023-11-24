@@ -6,28 +6,29 @@ from DAO.stationDAO import StationDAO
 class ModifStationListes:
     def ajouter_station(self, id_liste, id_station):
         station = StationDAO().add_id_station(id_liste, id_station)
+        response = {
+            "message": "La station a été ajoutée à votre liste : ",
+            "id_liste": station[0],
+            "id_station": station[1],
+        }
         print("-----------------------------------")
-        print(
-            "La station avec l'id '{}' a été ajoutée à votre liste dont l'identifiant est '{}'.".format(
-                station[1], station[0]
-            )
-        )
+        print(response["message"])
         print("-----------------------------------")
+        return response
 
     def remove_station(self, id_liste, id_station):
         station_dao = StationDAO()
         station_dao.remove_id_station(id_liste, id_station)
 
-        # Note : Nous n'avons pas besoin de vérifier si la station a été retirée,
-        # car la méthode remove_id_station ne retourne rien.
-
+        response = {
+            "message": "La station a été retirée de votre liste : ",
+            "id_liste": id_liste,
+            "id_station": id_station,
+        }
         print("-----------------------------------")
-        print(
-            "La station avec l'id '{}' a été retirée de votre liste dont l'identifiant est '{}'.".format(
-                id_station, id_liste
-            )
-        )
+        print(response["message"])
         print("-----------------------------------")
+        return response
 
     def obtenir_id_stations_from_liste(self, id_liste):
         station_dao = StationDAO()
@@ -35,7 +36,7 @@ class ModifStationListes:
 
 
 if __name__ == "__main__":
-    print(ModifStationListes().obtenir_id_stations_from_liste("8"))
+    ModifStationListes().remove_station(3, "18370001")
 
 
 # La classe Session pour chaque utilisateur qui se connecte sans
