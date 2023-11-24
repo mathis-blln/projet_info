@@ -17,4 +17,4 @@ class Inscription:
 
 
 if __name__ == "__main__":
-    Inscription().inscrire("mathis", "po")
+    Inscription().inscrire("mathis3", "pooo")

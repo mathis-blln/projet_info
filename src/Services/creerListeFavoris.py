@@ -27,5 +27,5 @@ class Creerliste:
 
 
 if __name__ == "__main__":
-    Creerliste().ajouter_liste(1, "paris")
+    Creerliste().ajouter_liste(3, "laillé")
     # AjouterstationDAO().creer_station("43363365", "Italy", "Versailles")

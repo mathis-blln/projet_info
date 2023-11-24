@@ -47,4 +47,9 @@ class ConsulterListesFavoris:
         return nouvelle_liste
 
     def retirer_liste(self, id_utilisateur, id_liste):
-        pass
+        liste = ListeDAO().remove_liste(id_utilisateur, id_liste)
+        return liste
+
+
+if __name__ == "__main__":
+    ConsulterListesFavoris().retirer_liste(3, 1)
