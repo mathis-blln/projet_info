@@ -14,7 +14,7 @@ class PrixCarburant:
         self.prix = prix
 
         def __str__(self):
-        return f"ID utilisateur: {self._id_utilisateur}, mot de passe : {self._mot_de_passe}"
+        return f"ID carburant: {self._id_utilisateur}, coûtant : {self.prix} dans la station d'id : {self.id_station}"
 
          """
         Retourne une représentation sous forme de chaîne de caractères de l'objet Utilisateur.

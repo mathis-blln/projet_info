@@ -2,8 +2,6 @@ from DAO.ajouterstationDAO import AjouterstationDAO
 
 # from projet_info.Classe.Utilisateur import Utilisateur
 
-# pip install python-dotenv: A toujours executer avant de commencer
-
 
 class Ajouterstation:
     def ajouter(self, id_liste, id_station):

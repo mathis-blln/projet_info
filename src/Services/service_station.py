@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 from Classe.Coordonnees import Coordonnees
 from Classe.TypeCarburant import TypeCarburant
 from Classe.Service import Services
-from helper import *
+from helper import selectionner_n_premiers, split_input, trier
 from geopy.geocoders import Nominatim
 import datetime
 
@@ -98,10 +98,10 @@ class StationsService:
     def trouver_stations_par_filtres(
         self,
         n: int,
-        services_recherches: str,
         carburants_recherches: str,
         latitude,
-        longitude
+        longitude,
+        services_recherches: str
         # coor_utilisateur: Coordonnees,
     ):
         # pour les services, mettre liste vide si aucun filtre dessus
@@ -280,14 +280,3 @@ class StationsService:
 
         # Utilisez jsonify pour convertir la liste de dictionnaires en JSON
         return json.dumps(resultats, indent=2)
-
-
-id_station_recherche = 74800004
-r = StationsService()
-resultat = r.trouver_informations_par_id(id_station_recherche)
-if resultat:
-    print(resultat)
-else:
-    print("Aucune station trouvée avec l'identifiant", id_station_recherche)
-liste_station = [74800004, 77390005, 77390003]
-print(r.info_stations_preferees(liste_station))

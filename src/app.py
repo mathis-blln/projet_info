@@ -5,6 +5,7 @@ from DAO.listeDAO import ListeDAO
 from typing import List as PyList
 from Services.consulterListeFavoris import ConsulterListesFavoris
 from Services.service_station import StationsService
+from typing import Optional  # Importez Optional
 
 
 app = FastAPI()
@@ -37,7 +38,7 @@ async def get_distinct_information():
 
 
 @app.get("/obtenir/coordonnees/{adresse}")
-async def obtenir_informations_station(adresse: str):
+async def adresse_to_coord(adresse: str):
     stations_service = StationsService()
     return stations_service.adresse_en_coordonnees(adresse)
 
@@ -46,6 +47,23 @@ async def obtenir_informations_station(adresse: str):
 async def obtenir_informations_station(id_station: int):
     stations_service = StationsService()
     return stations_service.trouver_informations_par_id(id_station)
+
+
+# à revoir
+@app.get(
+    "/stations/rechercher_par_filtres/{n}/{services_recherches}/{carburants_recherches}/{latitude}/{longitude}"
+)
+async def rechercher_par_filtres(
+    n: int,
+    carburants_recherches: str,
+    latitude: float,
+    longitude: float,
+    services_recherches: Optional[str] = "",
+):
+    station = StationsService()
+    return station.trouver_stations_par_filtres(
+        n, carburants_recherches, latitude, longitude, services_recherches
+    )
 
 
 """ # Choose list
