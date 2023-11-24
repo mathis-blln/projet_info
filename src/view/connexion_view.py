@@ -41,8 +41,12 @@ class ConnexionView(AbstractView):
                 return "EchecConnexion"
 
             else:
+                from view.menu_view import MenuView
+
                 # Stockage de l'ID utilisateur dans la session
                 Session().id_utilisateur = user_id
                 Session().mdp = user_password
                 print("Connexion réussie.")
-                return "Connexion"
+                menu_view = MenuView()
+                menu_view.display_info()
+                return menu_view.make_choice()

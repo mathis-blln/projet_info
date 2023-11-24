@@ -38,7 +38,7 @@ class MenuView(AbstractView):
         ]
 
     def display_info(self):
-        print("Bienvenue dans le menu !")
+        print("Que voulez vous faire ?")
 
     def make_choice(self):
         while True:

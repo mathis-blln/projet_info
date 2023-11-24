@@ -35,16 +35,12 @@ class InscriptionView(AbstractView):
                 print(
                     "Ce nom d'utilisateur est déjà utilisé. Veuillez en choisir un autre."
                 )
-                continue  # Retourner à la saisie du nom d'utilisateur
+                continue
 
             new_user_id = InscriptionDAO().add_user(user_username, user_password)
-            if (
-                new_user_id
-            ):  # Supposons que add_user() retourne l'ID nouvellement généré
-                session = Session()  # Instanciation de la session en tant qu'objet
-                session.id_utilisateur = (
-                    new_user_id  # Stockage de l'ID utilisateur dans la session
-                )
+            if new_user_id:
+                session = Session()
+                session.id_utilisateur = new_user_id
                 session.nom_utilisateur = user_username
                 session.mdp_utilisateur = user_password
                 print("Inscription réussie.")
