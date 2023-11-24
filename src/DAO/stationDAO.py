@@ -24,7 +24,18 @@ class StationDAO:
                 )
                 connection.commit()
 
-    """
+    def get_id_stations_from_liste(self, id_liste):
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "SELECT id_stations FROM projet.contenu_liste WHERE id_liste = %(id_liste)s",
+                    {"id_liste": id_liste},
+                )
+                result = cursor.fetchall()
+                return [row["id_stations"] for row in result]
+
+
+"""
     def add_id_station(self, id_liste, id_stations):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
@@ -36,16 +47,6 @@ class StationDAO:
                 )
                 res = cursor.fetchone()
                 return [res["id_liste"], res["id_stations"]]
-
-    def get_id_stations_from_liste(self, id_liste):
-        with DBConnection().connection as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    "SELECT id_stations FROM projet.contenu_liste WHERE id_liste = %(id_liste)s",
-                    {"id_liste": id_liste},
-                )
-                result = cursor.fetchall()
-                return [row["id_stations"] for row in result]
 
     def remove_id_station(self, id_liste, id_stations):
         with DBConnection().connection as connection:

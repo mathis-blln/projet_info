@@ -29,9 +29,13 @@ class ModifStationListes:
         )
         print("-----------------------------------")
 
+    def obtenir_id_stations_from_liste(self, id_liste):
+        station_dao = StationDAO()
+        return station_dao.get_id_stations_from_liste(id_liste)
+
 
 if __name__ == "__main__":
-    ModifStationListes().remove_station("1", "1234")
+    print(ModifStationListes().obtenir_id_stations_from_liste("8"))
 
 
 # La classe Session pour chaque utilisateur qui se connecte sans
