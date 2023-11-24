@@ -75,6 +75,15 @@ async def creer_liste(nom_liste, id_utilisateur):
     return nouvelle_liste_creee
 
 
+@app.delete("/retirer_liste", response_model=bool)
+async def retirer_liste(id_utilisateur, id_liste):
+    consulter = ConsulterListesFavoris()
+    liste_retiree = consulter.retirer_liste(
+        id_utilisateur=id_utilisateur, id_liste=id_liste
+    )
+    return liste_retiree
+
+
 """ # Choose list
 @app.get("/listesFav/{numero}")
 async def get_station_liste(numero: int):
