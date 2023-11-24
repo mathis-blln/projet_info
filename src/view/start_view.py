@@ -1,11 +1,8 @@
 from view.abstract_view import AbstractView
-<<<<<<< HEAD
 from view.session_view import Session
 from InquirerPy import prompt
 from view.connexion_view import ConnexionView
-=======
-from InquirerPy import prompt
->>>>>>> 534726f972cf1a73deee3928a4f090509d351112
+from view.inscription_view import InscriptionView
 
 
 class StartView:
@@ -28,23 +25,18 @@ class StartView:
         reponse = prompt(self.__questions)
         if reponse["choix"] == "Quitter":
             pass
-
         elif reponse["choix"] == "Connexion":
             connexion_view = ConnexionView()
             connexion_view.display_info()
             connexion_view.make_choice()
-
         elif reponse["choix"] == "Inscription":
-            from view.inscription_view import InscriptionView
-
             inscription_view = InscriptionView()
             inscription_view.display_info()
-            result = inscription_view.make_choice()
-            # Vérifie si l'inscription a été réussie et renvoie la vue de connexion si c'est le cas
-            if result == "Inscription réussie !":
-                return ConnexionView()
-
+            user_choice = inscription_view.make_choice()
+            if isinstance(
+                user_choice, ConnexionView
+            ):  # Vérification si la réponse est de type ConnexionView
+                return user_choice  # Si oui, retournez directement la vue de connexion
+            return inscription_view
         elif reponse["choix"] == "Faire une recherche":
-            from view.recherche_view import RechercheView
-
-            return RechercheView()
+            pass  # Ajoutez la logique pour la recherche ici

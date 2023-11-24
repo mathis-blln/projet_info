@@ -1,12 +1,10 @@
 from InquirerPy import prompt
-from abstract_view import AbstractView
-from session_view import Session
+from view.abstract_view import AbstractView
+from view.session_view import Session
 from DAO.inscriptionDAO import InscriptionDAO
-<<<<<<< HEAD
-from DAO.authentificationDAO import AuthentificationDAO
+from Services.authentification import Authentification
+from view.menu_view import MenuView
 from view.connexion_view import ConnexionView
-=======
->>>>>>> 534726f972cf1a73deee3928a4f090509d351112
 
 
 class InscriptionView(AbstractView):
@@ -15,60 +13,40 @@ class InscriptionView(AbstractView):
             {
                 "type": "input",
                 "name": "identifiant",
-                "message": "Entrez votre nouvel identifiant",
+                "message": "Entrez votre identifiant",
             },
             {
                 "type": "password",
                 "name": "mot de passe",
                 "message": "Entrez votre mot de passe",
-<<<<<<< HEAD
                 # "mask": "*",
-=======
-                "mask": "*",
->>>>>>> 534726f972cf1a73deee3928a4f090509d351112
             },
         ]
 
     def display_info(self):
-<<<<<<< HEAD
         print("-----------------------------------")
-        print("Bienvenue ! Veuillez vous inscrire en choisissant un mot de passe.")
-        print("Un identifiant vous sera attribué.")
+        print("Inscription: Entrez votre identifiant et votre mot de passe.")
         print("-----------------------------------")
-=======
-        print(
-            "Bienvenue ! Veuillez vous inscrire en choisissant un identifiant et un mot de passe"
-        )
->>>>>>> 534726f972cf1a73deee3928a4f090509d351112
 
     def make_choice(self):
         answers = prompt(self.__questions)
         user_id = answers["identifiant"]
         user_password = answers["mot de passe"]
 
-        # Vérifier si l'identifiant est déjà utilisé dans la base de données
         existing_user = InscriptionDAO().get_user_by_id(user_id)
         if existing_user:
             print("Cet identifiant est déjà utilisé. Veuillez en choisir un autre.")
-            return InscriptionView()  # Retourne à la vue d'inscription
+            return InscriptionView()
 
-        # Si l'identifiant est unique, enregistrer le nouvel utilisateur dans la base de données
         new_user = InscriptionDAO().add_user(user_id, user_password)
         if new_user:
             Session().id_utilisateur = user_id
             Session().mdp_utilisateur = user_password
-<<<<<<< HEAD
-            print(
-                "Votre identifiant est: {}. Il vous sera demandé à chaque connexion.".format(
-                    new_user._id_utilisateur
-                )
-            )
-            return ConnexionView()
-=======
-            from view.start_view import StartView
-
-            return StartView()
->>>>>>> 534726f972cf1a73deee3928a4f090509d351112
+            Session().id_utilisateur_inscrit = user_id
+            print("Inscription réussie.")
+            connexion_view = ConnexionView()  # Crée une instance de la vue de connexion
+            connexion_view.display_info()  # Affiche les informations de la vue de connexion
+            return connexion_view.make_choice()
         else:
             print("Echec de l'inscription.")
-            return InscriptionView()  # Retourne à la vue d'inscription en cas d'échec
+            return InscriptionView()
