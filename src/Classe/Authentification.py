@@ -37,6 +37,3 @@ class Authentification:
             return True
         else:
             return False
-
-
-# pas utilisée non plus
