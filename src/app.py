@@ -30,6 +30,12 @@ async def get_listes_favorites(id_user):
     return listes
 
 
+@app.get("/distincts/elements/carburants&services/")
+async def get_distinct_information():
+    station = StationsService()
+    return station.get_distinct_elements()
+
+
 @app.get("/stations/informations/{id_station}")
 async def obtenir_informations_station(id_station: int):
     stations_service = StationsService()
