@@ -68,7 +68,6 @@ class ListeDAO:
                     "DELETE FROM projet.listes WHERE id_utilisateur = %(id_utilisateur)s AND id_liste = %(id_liste)s",
                     {"id_utilisateur": id_user, "id_liste": id_liste},
                 )
-                # Vous pouvez vérifier si la suppression a réussi en vérifiant le nombre de lignes affectées.
                 if cursor.rowcount > 0:
                     return True  # La liste a été supprimée avec succès
                 else:

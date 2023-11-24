@@ -9,13 +9,12 @@ class Horaires:
         """
         self.ouverture = ouverture
         self.fermeture = fermeture
-   
-    def __str__(self):
-        return f"ID utilisateur: {self._id_utilisateur}, mot de passe : {self._mot_de_passe}"
 
-         """
+    def __str__(self):
+        """
         Retourne une représentation sous forme de chaîne de caractères de l'objet Utilisateur.
 
         Returns:
             str: Une chaîne de caractères représentant l'ID de l'utilisateur et son mot de passe.
-        """     
+        """
+        return f"ID utilisateur: {self.ouverture}, mot de passe : {self.fermeture}"

@@ -40,11 +40,35 @@ class InscriptionDAO(metaclass=Singleton):
                 else:
                     print("Echec d'inscription.")
 
+    def get_user_by_id(self, id_utilisateur):
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "SELECT * FROM projet.utilisateur WHERE id_utilisateur = %(id)s",
+                    {"id": id_utilisateur},
+                )
+                res = cursor.fetchone()
+                if res is not None:
+                    return Utilisateur(
+                        res["id_utilisateur"], res["nom_utilisateur"], res["mdp"]
+                    )
+                else:
+                    return None
 
-if __name__ == "__main__":
-    moi = InscriptionDAO().add_user("Mohamed", "0000")
-    print(
-        "Vos identifiants sont ({},{},{}).".format(
-            moi._id_utilisateur, moi._nom_utilisateur, moi._mot_de_passe
-        )
-    )
+    def get_user_by_username(self, username):
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "SELECT * FROM projet.utilisateur WHERE nom_utilisateur = %(username)s",
+                    {"username": username},
+                )
+                return cursor.fetchone()
+
+
+# if __name__ == "__main__":
+#    moi = InscriptionDAO().add_user("Mohamed", "0000")
+#    print(
+#       "Vos identifiants sont ({},{},{}).".format(
+#         moi._id_utilisateur, moi._nom_utilisateur, moi._mot_de_passe
+#    )
+# )

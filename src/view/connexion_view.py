@@ -1,8 +1,7 @@
 from InquirerPy import prompt
 from view.abstract_view import AbstractView
-from view.session import Session
-from projet_info.DAO.InscriptionDAO import InscriptionDAO
-from projet_info.Classe.Authentification import Authentification
+from view.session_view import Session
+from Services.authentification import Authentification
 
 
 class ConnexionView(AbstractView):
@@ -10,40 +9,40 @@ class ConnexionView(AbstractView):
         self.__questions = [
             {
                 "type": "input",
-                "name": "identifiant",
-                "message": "Entrez votre identifiant ",
+                "name": "nom_utilisateur",  # Modifier ici pour correspondre au nom dans le formulaire
+                "message": "Entrez votre nom d'utilisateur ",
             },
             {
                 "type": "password",
-                "name": "mot de passe",
-                "message": "Entrez votre mot de passe",
-                "mask": "*",  # Cache le mot de passe avec les caractères '*'
+                "name": "mot_de_passe",  # Modifier ici pour correspondre au nom dans le formulaire
+                "message": "Entrez votre mot de passe: ",
             },
         ]
 
     def display_info(self):
-        print("Bonjour, veuillez entrer votre identifiant et votre mot de passe")
+        print("Connexion: Entrez votre nom d'utilisateur et votre mot de passe")
 
     def make_choice(self):
-        answers = prompt(self.__questions)
-        user_id = answers["identifiant"]
-        user_password = answers["mot de passe"]
+        while True:
+            answers = prompt(self.__questions)
+            user_id = answers[
+                "nom_utilisateur"
+            ]  # Utiliser le bon nom de clé pour récupérer le nom d'utilisateur
+            user_password = answers[
+                "mot_de_passe"
+            ]  # Utiliser le bon nom de clé pour récupérer le mot de passe
 
-        # Vérification dans la base de données
-        auth_instance = Authentification(
-            user_id, user_password
-        )  # Crée une instance d'Authentification avec les entrées de l'utilisateur
+            # Vérification des identifiants par rapport à ceux stockés lors de l'inscription
+            auth = Authentification().verifier(user_id, user_password)
 
-        user = InscriptionDAO().get_user_by_id(user_id)
-        if user and user.compare(user_id, user_password):
-            Session().id_utilisateur = user_id
-            Session().mdp_utilisateur = user_password
-            from view.start_view import StartView
+            if not auth:
+                print("Le nom d'utilisateur ou le mot de passe est incorrect.")
+                print("Retour au menu principal...")
+                return "EchecConnexion"
 
-            return StartView()
-
-        print("Identifiant ou mot de passe incorrect")
-        input(
-            "Appuyez sur Entrée pour retourner à la vue de connexion"
-        )  # Attente de l'entrée utilisateur
-        return ConnexionView()  # Retourne automatiquement à la vue de connexion
+            else:
+                # Stockage de l'ID utilisateur dans la session
+                Session().id_utilisateur = user_id
+                Session().mdp = user_password
+                print("Connexion réussie.")
+                return "Connexion"

@@ -14,7 +14,17 @@ class StationDAO:
                 res = cursor.fetchone()
                 return [res["id_liste"], res["id_stations"]]
 
-    def get_id_stations_for_liste(self, id_liste):
+    def remove_id_station(self, id_liste, id_stations):
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM projet.contenu_liste "
+                    "WHERE id_liste = %(id_liste)s AND id_stations = %(id_stations)s",
+                    {"id_liste": id_liste, "id_stations": id_stations},
+                )
+                connection.commit()
+
+    def get_id_stations_from_liste(self, id_liste):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -24,14 +34,29 @@ class StationDAO:
                 result = cursor.fetchall()
                 return [row["id_stations"] for row in result]
 
+
+"""
+    def add_id_station(self, id_liste, id_stations):
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO projet.contenu_liste (id_liste, id_stations)"
+                    "VALUES (%(id_liste)s, %(id_stations)s)"
+                    "RETURNING id_liste, id_stations",
+                    {"id_liste": id_liste, "id_stations": id_stations},
+                )
+                res = cursor.fetchone()
+                return [res["id_liste"], res["id_stations"]]
+
     def remove_id_station(self, id_liste, id_stations):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
                     "DELETE FROM projet.contenu_liste "
-                    "WHERE id_liste = %(id_liste)s AND id_stations = %(id_stations)s",
+                    "WHERE CAST(id_liste AS text) = %(id_liste)s AND CAST(id_stations AS text) = %(id_stations)s",
                     {"id_liste": id_liste, "id_stations": id_stations},
                 )
+                connection.commit()
 
     # def creer_station(self, id_station, adresse, ville):
     #     with DBConnection().connection as connection:
@@ -48,3 +73,4 @@ class StationDAO:
     #                 },
     #             )
     # res = cursor.fetchone()
+"""
