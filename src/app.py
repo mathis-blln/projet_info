@@ -66,6 +66,15 @@ async def rechercher_par_filtres(
     )
 
 
+@app.post("/creer_liste", response_model=Liste)
+async def creer_liste(nom_liste, id_utilisateur):
+    consulter = ConsulterListesFavoris()
+    nouvelle_liste_creee = consulter.creer_nouvelle_liste(
+        id_utilisateur=id_utilisateur, nom_liste=nom_liste
+    )
+    return nouvelle_liste_creee
+
+
 """ # Choose list
 @app.get("/listesFav/{numero}")
 async def get_station_liste(numero: int):

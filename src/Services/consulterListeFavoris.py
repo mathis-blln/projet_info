@@ -52,4 +52,4 @@ class ConsulterListesFavoris:
 
 
 if __name__ == "__main__":
-    ConsulterListesFavoris().retirer_liste(3, 1)
+    ConsulterListesFavoris().retirer_liste(3, 5)

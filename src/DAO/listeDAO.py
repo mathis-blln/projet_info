@@ -50,8 +50,8 @@ class ListeDAO:
                     "(%(id_liste)s, %(id_utilisateur)s, %(nom_liste)s)              "
                     "RETURNING id_liste, id_utilisateur, nom_liste                  ",
                     {
-                        "id_liste": id_liste,
-                        "id_utilisateur": id_user,
+                        "id_liste": int(id_liste),
+                        "id_utilisateur": int(id_user),
                         "nom_liste": nom_liste,
                     },
                 )
@@ -80,5 +80,5 @@ if __name__ == "__main__":
     liste_dao = ListeDAO()
 
     # Test de la méthode add_liste
-    nouvelle_liste = liste_dao.remove_liste(1, 1)
-    print(" liste supprimée ")
+    nouvelle_liste = liste_dao.add_liste(3, "nice")
+    print(" liste ajoutée ")

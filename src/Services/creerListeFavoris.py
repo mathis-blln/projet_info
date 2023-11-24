@@ -3,6 +3,7 @@ from DAO.listeDAO import ListeDAO
 # from projet_info.DAO.ajouterstationDAO import AjouterstationDAO
 
 
+# pas utiliser
 class Creerliste:
     def ajouter_liste(self, id_utilisateur, nom_liste):
         """
@@ -27,5 +28,5 @@ class Creerliste:
 
 
 if __name__ == "__main__":
-    Creerliste().ajouter_liste(3, "laillé")
+    Creerliste().ajouter_liste(3, "brest")
     # AjouterstationDAO().creer_station("43363365", "Italy", "Versailles")
