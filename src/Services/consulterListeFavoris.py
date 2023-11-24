@@ -1,4 +1,4 @@
-from DAO.consulterListeDAO import ConsulterListeDAO
+from DAO.listeDAO import ListeDAO
 from Classe import Liste
 
 # Besoin de la classe Session car aucun paramètre va être passé en paramètre
@@ -6,7 +6,7 @@ from Classe import Liste
 
 class ConsulterListesFavoris:
     def consulter_listes(self, id_user) -> list[Liste]:
-        resultat = ConsulterListeDAO().find_all_listes(id_user)
+        resultat = ListeDAO().find_all_listes(id_user)
         if len(resultat):
             print("Votre listes sont:")
             print("-----------------------------------")

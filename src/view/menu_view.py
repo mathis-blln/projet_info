@@ -1,4 +1,5 @@
 from InquirerPy import prompt
+import requests
 
 # import sys
 
@@ -46,20 +47,35 @@ class MenuView(AbstractView):
             choice = answers["choice"]
 
             if choice == "1":
-                # Ajoutez le code pour l'option "Effectuer une recherche"
-                pass
+                # Appel à l'API pour obtenir toutes les listes favorites
+                response = requests.get("http://127.0.0.1/listesFav/")
+                if response.status_code == 200:
+                    data = response.json()  # Récupérer les données JSON
+                    print("Listes favorites disponibles:")
+                    for key, value in data.items():
+                        print(f"{key}: {value}")
+                else:
+                    print("Erreur lors de la récupération des listes favorites.")
+
             elif choice == "2":
-                # Ajoutez le code pour l'option "Consulter mes stations favorites"
-                pass
+                # Appel à l'API pour obtenir une liste spécifique
+                numero = int(input("Entrez le numéro de la liste: "))
+                response = requests.get(f"http://127.0.0.1/listesFav/{numero}")
+                if response.status_code == 200:
+                    data = response.json()  # Récupérer les données JSON
+                    print(f"Liste favorite {numero}: {data}")
+                else:
+                    print(f"Erreur lors de la récupération de la liste {numero}.")
+
             elif choice == "3":
                 # Ajoutez le code pour l'option "Modifier/Supprimer mes stations favorites"
                 pass
+
             elif choice == "4":
+                pass
+
+            elif choice == "5":
                 Session().clear_session()  # Efface les informations de session
-                from view.connexion_view import ConnexionView
-
-                return ConnexionView()  # Retourne à la vue de connexion
-
-            input(
-                "Appuyez sur Entrée pour revenir au menu"
-            )  # Attente de l'entrée utilisateur pour revenir au menu principal
+                print("Déconnexion réussie.")
+                input("Appuyez sur Entrée pour quitter...")  # Attente avant de quitter
+                return None
