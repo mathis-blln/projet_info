@@ -37,9 +37,14 @@ class InscriptionView(AbstractView):
                 )
                 continue  # Retourner à la saisie du nom d'utilisateur
 
-            new_user = InscriptionDAO().add_user(user_username, user_password)
-            if new_user:
+            new_user_id = InscriptionDAO().add_user(user_username, user_password)
+            if (
+                new_user_id
+            ):  # Supposons que add_user() retourne l'ID nouvellement généré
                 session = Session()  # Instanciation de la session en tant qu'objet
+                session.id_utilisateur = (
+                    new_user_id  # Stockage de l'ID utilisateur dans la session
+                )
                 session.nom_utilisateur = user_username
                 session.mdp_utilisateur = user_password
                 print("Inscription réussie.")

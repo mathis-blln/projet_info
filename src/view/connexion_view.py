@@ -2,7 +2,6 @@ from InquirerPy import prompt
 from view.abstract_view import AbstractView
 from view.session_view import Session
 from Services.authentification import Authentification
-from view.menu_view import MenuView
 
 
 class ConnexionView(AbstractView):
@@ -11,7 +10,7 @@ class ConnexionView(AbstractView):
             {
                 "type": "input",
                 "name": "identifiant",
-                "message": "Entrez votre identifiant ",
+                "message": "Entrez votre nom d'utilisateur ",
             },
             {
                 "type": "password",
@@ -21,7 +20,7 @@ class ConnexionView(AbstractView):
         ]
 
     def display_info(self):
-        print("Connexion: Entrez votre identifiant et votre mot de passe")
+        print("Connexion: Entrez votre nom d'utilisateur et votre mot de passe")
 
     def make_choice(self):
         while True:
@@ -29,15 +28,15 @@ class ConnexionView(AbstractView):
             user_id = answers["identifiant"]
             user_password = answers["mot de passe"]
 
+            # Vérification des identifiants par rapport à ceux stockés lors de l'inscription
             auth = Authentification().verifier(user_id, user_password)
             if not auth:
-                print("Le mot de passe ne correspond pas à l'identifiant.")
+                print("Le nom d'utilisateur ou le mot de passe est incorrect.")
                 print("Retour au menu principal...")
-
-                # Retourne une valeur spécifique pour indiquer l'échec de l'authentification
                 return "EchecConnexion"
 
             else:
+                # Stockage de l'ID utilisateur dans la session
                 Session().id_utilisateur = user_id
                 Session().mdp = user_password
                 print("Connexion réussie.")
