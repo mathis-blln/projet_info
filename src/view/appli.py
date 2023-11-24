@@ -1,5 +1,6 @@
-from dao.authentificationDAO import AuthentificationDAO
-from dao.db_connection import DBConnection
+from DAO.authentificationDAO import AuthentificationDAO
+from DAO.db_connection import DBConnection
+
 
 class Application:
     def __init__(self):
@@ -42,6 +43,7 @@ class Application:
                 break
             else:
                 print("Option invalide. Veuillez réessayer.")
+
 
 if __name__ == "__main__":
     app = Application()
