@@ -36,6 +36,12 @@ async def get_distinct_information():
     return station.get_distinct_elements()
 
 
+@app.get("/obtenir/coordonnees/{adresse}")
+async def obtenir_informations_station(adresse: str):
+    stations_service = StationsService()
+    return stations_service.adresse_en_coordonnees(adresse)
+
+
 @app.get("/stations/informations/{id_station}")
 async def obtenir_informations_station(id_station: int):
     stations_service = StationsService()

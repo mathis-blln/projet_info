@@ -83,7 +83,7 @@ class StationsService:
 
         return carburants, services
 
-    def adresse_en_coordonnees(adresse):
+    def adresse_en_coordonnees(self, adresse):
         geolocator = Nominatim(user_agent="géoloc")
 
         location = geolocator.geocode(adresse)

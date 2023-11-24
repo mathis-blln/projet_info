@@ -110,6 +110,9 @@ def adresse_en_coordonnees(adresse):
         return None
 
 
+print(adresse_en_coordonnees("3 rue de la fontaine saint martin, soignolles-en-brie"))
+
+
 def trouver_stations_par_filtres(
     n: int,
     services_recherches: str,
