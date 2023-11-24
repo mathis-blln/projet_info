@@ -17,4 +17,4 @@ class Inscription:
 
 
 if __name__ == "__main__":
-    Inscription().inscrire("Utilisateur", "Mot de passe")
+    Inscription().inscrire("mathis", "po")

@@ -66,7 +66,7 @@ class ListeDAO:
             with connection.cursor() as cursor:
                 cursor.execute(
                     "DELETE FROM projet.listes WHERE id_utilisateur = %(id_utilisateur)s AND id_liste = %(id_liste)s",
-                    {"id_utilisateur": id_user, "id_liste": id_liste},
+                    {"id_utilisateur": int(id_user), "id_liste": int(id_liste)},
                 )
                 if cursor.rowcount > 0:
                     return True  # La liste a été supprimée avec succès
@@ -74,3 +74,11 @@ class ListeDAO:
                     return (
                         False  # La liste n'a pas été trouvée ou n'a pas été supprimée
                     )
+
+
+if __name__ == "__main__":
+    liste_dao = ListeDAO()
+
+    # Test de la méthode add_liste
+    nouvelle_liste = liste_dao.remove_liste(1, 1)
+    print(" liste supprimée ")
