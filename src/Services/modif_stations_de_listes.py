@@ -3,7 +3,7 @@ from DAO.ajouterstationDAO import AjouterstationDAO
 # from projet_info.Classe.Utilisateur import Utilisateur
 
 
-class Station:
+class ModifStationListes:
     def ajouter(self, id_liste, id_station):
         station = AjouterstationDAO().add_id_station(id_liste, id_station)
         print("-----------------------------------")
@@ -16,7 +16,7 @@ class Station:
 
 
 if __name__ == "__main__":
-    Station().ajouter("8", "7978787878")
+    ModifStationListes().ajouter("8", "7978787878")
 
 
 # La classe Session pour chaque utilisateur qui se connecte sans
