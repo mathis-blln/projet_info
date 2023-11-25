@@ -235,7 +235,7 @@ class StationsService:
                             ],
                         }
 
-                        return json.dumps(response_json, indent=4, ensure_ascii=False)
+                        return response_json
 
                     else:
                         print(
@@ -404,7 +404,7 @@ class StationsService:
                             ],
                         }
 
-                        return json.dumps(response_json, indent=4, ensure_ascii=False)
+                        return response_json
 
                     else:
                         print(
@@ -500,7 +500,7 @@ class StationsService:
 if __name__ == "__main__":
     station = StationsService()
     print(
-        station.trouver_stations_par_filtres(
-            5, "Lavage automatique", "Gazole", 42.5, 1.89
+        station.trouver_stations_par_filtres_adresse(
+            5, "Lavage automatique", "Gazole", "la renouette, laillé"
         )
     )

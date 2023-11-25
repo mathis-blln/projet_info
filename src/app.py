@@ -7,7 +7,9 @@ from Services.consulterListeFavoris import ConsulterListesFavoris
 from Services.service_station import StationsService
 from typing import Optional  # Importez Optional
 from Services.modif_stations_de_listes import ModifStationListes
-
+import json
+from fastapi.responses import JSONResponse
+import datetime
 
 app = FastAPI()
 
@@ -15,6 +17,42 @@ app = FastAPI()
 class Liste(BaseModel):
     id_liste: int
     nom_liste: str
+
+
+@app.get("/distincts/elements/carburants&services/")
+async def get_distinct_information():
+    station = StationsService()
+    return station.get_distinct_elements()
+
+
+@app.get(
+    "/recherche/par/filtres/adresse/{n}/{services_recherches}/{carburant_recherche}/{adresse_utilisateur}"
+)
+async def obtenir_informations_station_par_adresse(
+    n: int, services_recherches: str, carburant_recherche: str, adresse_utilisateur: str
+):
+    stations_service = StationsService()
+    response_data = stations_service.trouver_stations_par_filtres_adresse(
+        n, services_recherches, carburant_recherche, adresse_utilisateur
+    )
+    return JSONResponse(content=response_data)
+
+
+@app.get(
+    "/recherche/par/filtres/{n}/{services_recherches}/{carburant_recherche}/{latitude}/{longitude}"
+)
+async def obtenir_informations_station(
+    n: int,
+    services_recherches: str,
+    carburant_recherche: str,
+    latitude: float,
+    longitude: float,
+):
+    stations_service = StationsService()
+    response_data = stations_service.trouver_stations_par_filtres(
+        n, services_recherches, carburant_recherche, latitude, longitude
+    )
+    return JSONResponse(content=response_data)
 
 
 # List all favorite lists
@@ -27,39 +65,10 @@ async def get_listes_favorites(id_user):
     return listes
 
 
-@app.get("/distincts/elements/carburants&services/")
-async def get_distinct_information():
-    station = StationsService()
-    return station.get_distinct_elements()
-
-
-@app.get("/obtenir/coordonnees/{adresse}")
-async def adresse_to_coord(adresse: str):
-    stations_service = StationsService()
-    return stations_service.adresse_en_coordonnees(adresse)
-
-
 @app.get("/stations/informations/{id_station}")
 async def obtenir_informations_station(id_station: int):
     stations_service = StationsService()
     return stations_service.trouver_informations_par_id(id_station)
-
-
-# à revoir
-@app.get(
-    "/stations/rechercher_par_filtres/{n}/{services_recherches}/{carburants_recherches}/{latitude}/{longitude}"
-)
-async def rechercher_par_filtres(
-    n: int,
-    carburants_recherches: str,
-    latitude: float,
-    longitude: float,
-    services_recherches: Optional[str] = "",
-):
-    station = StationsService()
-    return station.trouver_stations_par_filtres(
-        n, carburants_recherches, latitude, longitude, services_recherches
-    )
 
 
 @app.post("/creer_liste", response_model=Liste)

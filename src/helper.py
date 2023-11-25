@@ -27,7 +27,7 @@ def element_distinct(liste: list):
 
 
 def split_input(user_input):
-    if user_input == "":
+    if user_input == "aucun":
         return []
     else:
         # Diviser la chaîne en une liste en utilisant la virgule comme séparateur
