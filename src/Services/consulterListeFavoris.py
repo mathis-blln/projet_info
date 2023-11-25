@@ -1,31 +1,13 @@
 from DAO.listeDAO import ListeDAO
 from Classe import Liste
+from DAO.stationDAO import StationDAO
+from Services.service_station import StationsService
+
 
 # Besoin de la classe Session car aucun paramètre va être passé en paramètre
 
 
 class ConsulterListesFavoris:
-    """
-    def consulter_listes(self, id_user) -> list[Liste]:
-        resultat = ListeDAO().find_all_listes(id_user)
-        if len(resultat):
-            print("Vos listes sont:")
-            print("-----------------------------------")
-            for i in range(len(resultat)):
-                print(
-                    "Liste {}: (id liste: {}, nom liste: {})".format(
-                        i + 1, resultat[i].id_liste, resultat[i].nom_liste
-                    )
-                )
-                # print(resultat[i]["id_liste"])
-        else:
-            print("-----------------------------------")
-            print("Aucune liste de favoris trouvée.")
-
-        print("-----------------------------------")
-        return resultat
-    """
-
     def consulter_listes(self, id_user) -> list[Liste]:
         resultat = ListeDAO().find_all_listes(id_user)
         self.afficher_listes(resultat)
@@ -50,6 +32,13 @@ class ConsulterListesFavoris:
         liste = ListeDAO().remove_liste(id_utilisateur, id_liste)
         return liste
 
+    def information_liste(self, id_liste):
+        station = StationDAO()
+        id_station = station.get_id_stations_from_liste(id_liste)
+        service_station = StationsService()
+        informations_stations = service_station.info_stations_preferees2(id_station)
+        return informations_stations
+
 
 if __name__ == "__main__":
-    ConsulterListesFavoris().retirer_liste(3, 5)
+    print(ConsulterListesFavoris().information_liste(4))
