@@ -16,7 +16,10 @@ from Session import Session
 app2 = FastAPI()
 
 
-@app2.get("/distincts/elements/carburants&services/")
+@app2.get(
+    "/distincts/elements/carburants&services/",
+    description="Obtenir tous les services et carburants distincts dans le fichier XML",
+)
 async def get_distinct_information():
     station = StationsService()
     return station.get_distinct_elements()
