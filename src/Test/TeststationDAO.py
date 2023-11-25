@@ -6,7 +6,7 @@ from DAO.stationDAO import StationDAO
 class TestStationDAO(unittest.TestCase):
     @patch("DAO.stationDAO.DBConnection")
     def test_add_id_station(self, mock_DBConnection):
-        # Créez une instance de StationDAO
+        # C'esr pour créer une instance de StationDAO
         dao = StationDAO()
 
         # Mock de la connexion à la base de données
@@ -17,14 +17,14 @@ class TestStationDAO(unittest.TestCase):
         )
         mock_connection.cursor.return_value.__enter__.return_value = mock_cursor
 
-        # Définir le résultat attendu
+        # Définit le résultat attendu
         expected_result = {"id_liste": 1, "id_stations": 42}
         mock_cursor.fetchone.return_value = expected_result
 
-        # Appeler la méthode à tester
+        # Fait appel à la méthode à tester
         result = dao.add_id_station(id_liste=1, id_stations=42)
 
-        # Vérifier que la méthode execute a été appelée avec les bons arguments
+        # Vérifie si la méthode execute a été appelée avec les bons arguments
         mock_cursor.execute.assert_called_once_with(
             "INSERT INTO projet.contenu_liste (id_liste, id_stations)"
             "VALUES (%(id_liste)s, %(id_stations)s)"
@@ -32,10 +32,10 @@ class TestStationDAO(unittest.TestCase):
             {"id_liste": 1, "id_stations": 42},
         )
 
-        # Vérifier que la méthode fetchone a été appelée
+        # Vérifie que la méthode fetchone a été appelée
         mock_cursor.fetchone.assert_called_once()
 
-        # Vérifier que le résultat de la méthode est correct
+        # Vérifie que le résultat de la méthode est correct
         self.assertEqual(result, [1, 42])
 
     @patch("DAO.stationDAO.DBConnection")

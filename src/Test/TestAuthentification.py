@@ -4,7 +4,7 @@ from Classe.Authentification import Authentification
 
 class TestAuthentification(unittest.TestCase):
     def setUp(self):
-        # Créer une instance d'Authentification avec des valeurs par défaut pour les tests
+        # Crée une instance d'Authentification avec des valeurs par défaut pour les tests
         self.auth = Authentification("utilisateur_test", "mot_de_passe_test")
 
     def test_compare_authentification_valide(self):
