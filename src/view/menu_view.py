@@ -1,19 +1,7 @@
-from InquirerPy import prompt
 import requests
-
-# import sys
-
-# sys.path.insert(0, "\\filer-eleves2\id2315\projet_info\projet_info")
-# from InquirerPy import prompt
-
-# from InquirerPy import inquirer
 from view.abstract_view import AbstractView
 from view.session_view import Session
 from DAO.inscriptionDAO import InscriptionDAO
-
-# from DAO.MenuDAO import (
-#     MenuDAO,
-# )  # Créez votre propre DAO pour gérer les fonctionnalités du menu
 
 
 class MenuView(AbstractView):
@@ -38,7 +26,7 @@ class MenuView(AbstractView):
         ]
 
     def display_info(self):
-        print("Que voulez vous faire ?")
+        print("Que voulez-vous faire ?")
 
     def make_choice(self):
         while True:
@@ -49,7 +37,7 @@ class MenuView(AbstractView):
                 # Appel à l'API pour obtenir toutes les listes favorites
                 response = requests.get("http://127.0.0.1/listesFav/")
                 if response.status_code == 200:
-                    data = response.json()  # Récupérer les données JSON
+                    data = response.json()
                     print("Listes favorites disponibles:")
                     for key, value in data.items():
                         print(f"{key}: {value}")
@@ -61,7 +49,7 @@ class MenuView(AbstractView):
                 numero = int(input("Entrez le numéro de la liste: "))
                 response = requests.get(f"http://127.0.0.1/listesFav/{numero}")
                 if response.status_code == 200:
-                    data = response.json()  # Récupérer les données JSON
+                    data = response.json()
                     print(f"Liste favorite {numero}: {data}")
                 else:
                     print(f"Erreur lors de la récupération de la liste {numero}.")
@@ -76,5 +64,5 @@ class MenuView(AbstractView):
             elif choice == "Déconnexion":
                 # Session().clear_session()  # Efface les informations de session
                 print("Déconnexion réussie.")
-                input("Appuyez sur Entrée pour quitter...")  # Attente avant de quitter
+                input("Appuyez sur Entrée pour quitter...")
                 return None

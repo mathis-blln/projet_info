@@ -278,5 +278,4 @@ class StationsService:
             if informations_station:
                 resultats.append(informations_station)
 
-        # Utilisez jsonify pour convertir la liste de dictionnaires en JSON
-        return json.dumps(resultats, indent=2)
+        return resultats

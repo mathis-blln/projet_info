@@ -10,3 +10,7 @@ class Session(metaclass=Singleton):
         permet de donner le type des variables. Utile pour l'autocompletion.
         """
         self.user_name: str = "unknown"
+
+    def clear_session(self):
+        # Effacer les données de session
+        self.user = None  # Réinitialiser l'utilisateur actuel

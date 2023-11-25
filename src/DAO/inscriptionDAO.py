@@ -32,7 +32,9 @@ class InscriptionDAO(metaclass=Singleton):
                 )
                 new_user_id = cursor.fetchone()
                 if new_user_id is not None:
-                    return new_user_id["id_utilisateur"]  # Retourne l'id_utilisateur
+                    return new_user_id[
+                        "id_utilisateur"
+                    ]  # Retourne l'id_utilisateur nouvellement généré
                 else:
                     return None  # Retourne None en cas d'échec d'insertion
 
