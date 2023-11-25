@@ -242,7 +242,8 @@ class StationsService:
         adresse_utilisateur: str,
     ):
         """
-         Permet de trouver une ou plusieurs stations en rentrant n(le nombre de stations recherchées), carburants recherchés, services recherchés, adresse et rayon(afin de délimiter une zone de recherche)
+         Permet de trouver une ou plusieurs stations en rentrant n(le nombre de stations recherchées),
+         carburants recherchés, services recherchés, adresse et rayon(afin de délimiter une zone de recherche)
 
         Args:
             n : int
@@ -252,7 +253,7 @@ class StationsService:
 
         Returns:
             list: Liste d'instances de la classe Station.
-        """
+        """  # noqa: E501
         coor = adresse_en_coordonnees(adresse_utilisateur)
 
         if coor:
