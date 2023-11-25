@@ -84,7 +84,7 @@ class StartView:
                 )
 
                 if response_back["choix_back"] == "Retour au menu":
-                    continue  # Redémarrer la boucle pour afficher à nouveau les options du menu
+                    continue  # Redémarrer la boucle pour afficher à nouveau les options du menu  # noqa: E501
 
                 if response_back["choix_back"] == "Quitter":
                     break
