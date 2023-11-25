@@ -2,6 +2,7 @@ from InquirerPy import prompt
 from view.abstract_view import AbstractView
 from view.session_view import Session
 from DAO.inscriptionDAO import InscriptionDAO
+from Classe.Utilisateur import Utilisateur
 
 
 class InscriptionView(AbstractView):
@@ -39,10 +40,10 @@ class InscriptionView(AbstractView):
 
             new_user_id = InscriptionDAO().add_user(user_username, user_password)
             if new_user_id:
-                session = Session()
-                session.id_utilisateur = new_user_id
-                session.nom_utilisateur = user_username
-                session.mdp_utilisateur = user_password
+                session = Utilisateur(new_user_id, user_username, user_password)
+                # session.id_utilisateur = new_user_id
+                # session.nom_utilisateur = user_username
+                # session.mot_de_passe = user_password
                 print("Inscription réussie.")
                 return "Connexion"
             else:

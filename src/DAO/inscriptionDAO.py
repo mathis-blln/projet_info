@@ -17,20 +17,24 @@ class InscriptionDAO(metaclass=Singleton):
                 return 0  # Si aucune ligne n'est trouvée, retournez 0
 
     def add_user(self, nom_utilisateur, mdp):
+        id_utilisateur = self.taille_table() + 1
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO projet.utilisateur (nom_utilisateur, mdp) "
-                    "VALUES (%(nom_utilisateur)s, %(mdp)s) "
+                    "INSERT INTO projet.utilisateur (id_utilisateur, nom_utilisateur, mdp) "
+                    "VALUES (%(id_utilisateur)s, %(nom_utilisateur)s, %(mdp)s) "
                     "RETURNING id_utilisateur",  # Retourne l'id_utilisateur nouvellement généré
                     {
+                        "id_utilisateur": id_utilisateur,
                         "nom_utilisateur": nom_utilisateur,
                         "mdp": mdp,
                     },
                 )
                 new_user_id = cursor.fetchone()
                 if new_user_id is not None:
-                    return new_user_id["id_utilisateur"]  # Retourne l'id_utilisateur
+                    return new_user_id[
+                        "id_utilisateur"
+                    ]  # Retourne l'id_utilisateur nouvellement généré
                 else:
                     return None  # Retourne None en cas d'échec d'insertion
 
