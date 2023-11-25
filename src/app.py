@@ -65,10 +65,10 @@ async def get_listes_favorites(id_user):
     return listes
 
 
-@app.get("/stations/informations/{id_station}")
+""" @app.get("/stations/informations/{id_station}")
 async def obtenir_informations_station(id_station: int):
     stations_service = StationsService()
-    return stations_service.trouver_informations_par_id(id_station)
+    return stations_service.trouver_informations_par_id(id_station) """
 
 
 @app.post("/creer_liste", response_model=Liste)
