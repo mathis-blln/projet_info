@@ -58,10 +58,11 @@ async def obtenir_informations_station(
 
 
 # List all favorite lists
-@app.get("/listesFav/{id_user}", response_model=PyList[Liste])
-async def get_listes_favorites(id_user):
+@app.get("/listesFav/}", response_model=PyList[Liste])
+async def get_listes_favorites():
+    user_id = Session().id_utilisateur
     consulter = ConsulterListesFavoris()
-    listes = consulter.consulter_listes(id_user)
+    listes = consulter.consulter_listes(user_id)
     if not listes:
         raise HTTPException(status_code=404, detail="Aucune liste de favoris trouvée.")
     return listes
