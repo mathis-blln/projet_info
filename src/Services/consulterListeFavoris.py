@@ -36,7 +36,7 @@ class ConsulterListesFavoris:
         station = StationDAO()
         id_station = station.get_id_stations_from_liste(id_liste)
         service_station = StationsService()
-        informations_stations = service_station.info_stations_preferees2(id_station)
+        informations_stations = service_station.info_stations_preferees(id_station)
         return informations_stations
 
 
