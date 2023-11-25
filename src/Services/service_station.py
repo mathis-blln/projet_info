@@ -90,11 +90,10 @@ class StationsService:
         n: int,
         services_recherches: str,
         carburants_recherches: str,
-        latitude: float,
+        latitute: float,
         longitude: float,
     ):
-        coor_utilisateur = Coordonnees(0, latitude, longitude, "adresse")
-
+        coor_utilisateur = Coordonnees(0, latitute, longitude, "adresse")
         url = "https://donnees.roulez-eco.fr/opendata/instantane"
 
         services_recherches = split_input(services_recherches)
@@ -112,13 +111,7 @@ class StationsService:
                         xml_content = zip_file.read(xml_file_name).decode("latin-1")
                         root = ET.fromstring(xml_content)
 
-                        ids = []
-                        latitude = []
-                        longitude = []
-                        cp = []
-                        ville = []
-                        adresse = []
-                        carburants_list = []
+                        stations = []
 
                         for pdv_element in root.findall(".//pdv"):
                             services = [
@@ -145,50 +138,37 @@ class StationsService:
                                     pdv_cp = pdv_element.get("cp")
                                     pdv_ville = pdv_element.get("ville")
                                     pdv_adresse = pdv_element.findtext(".//adresse")
-                                    ids.append(pdv_id)
-                                    latitude.append(pdv_latitude)
-                                    longitude.append(pdv_longitude)
-                                    cp.append(pdv_cp)
-                                    ville.append(pdv_ville)
-                                    adresse.append(pdv_adresse)
 
-                                    carburants_list.append(carburants)
+                                    # Récupérer les prix de la station actuelle
+                                    prix_carburant = [
+                                        PrixCarburant(
+                                            carburant_element.get("id"),
+                                            pdv_id,
+                                            float(carburant_element.get("valeur")),
+                                        )
+                                        for carburant_element in pdv_element.findall(
+                                            ".//prix"
+                                        )
+                                        if carburant_element.get("nom")
+                                        == carburants_recherches
+                                    ]
 
-                        stations = [
-                            Station(
-                                pdv_id,
-                                pdv_cp,
-                                pdv_ville,
-                                pdv_adresse,
-                                Coordonnees(
-                                    pdv_id,
-                                    float(pdv_latitude) / 100000,
-                                    float(pdv_longitude) / 100000,
-                                    pdv_adresse,
-                                ),
-                                [
-                                    PrixCarburant(
-                                        carburant_element.get("id"),
+                                    # Créer l'objet Station avec toutes les informations nécessaires
+                                    station = Station(
                                         pdv_id,
-                                        float(carburant_element.get("valeur")),
+                                        pdv_cp,
+                                        pdv_ville,
+                                        pdv_adresse,
+                                        Coordonnees(
+                                            pdv_id,
+                                            float(pdv_latitude) / 100000,
+                                            float(pdv_longitude) / 100000,
+                                            pdv_adresse,
+                                        ),
+                                        prix_carburant,
                                     )
-                                    for carburant_element in pdv_element.findall(
-                                        ".//prix"
-                                    )
-                                    if carburant_element.get("nom")
-                                    == carburants_recherches
-                                ],
-                            )
-                            for pdv_id, pdv_cp, pdv_ville, pdv_adresse, pdv_latitude, pdv_longitude, carburants in zip(
-                                ids,
-                                cp,
-                                ville,
-                                adresse,
-                                latitude,
-                                longitude,
-                                carburants_list,
-                            )
-                        ]
+
+                                    stations.append(station)
 
                         dist = []
                         for x in stations:
@@ -207,9 +187,9 @@ class StationsService:
                             "Voici les éléments de votre requête": {
                                 "services recherches": services_recherches,
                                 "carburants recherches": carburants_recherches,
-                                "coordonnees": {
-                                    "latitude entrée ": coor_utilisateur.latitude,
-                                    "longitude entrée": coor_utilisateur.longitude,
+                                "coordonnées entrées": {
+                                    "latitude": coor_utilisateur.latitude,
+                                    "longitude": coor_utilisateur.longitude,
                                 },
                             },
                             "date_heure_execution": str(datetime.datetime.now()),
@@ -284,13 +264,7 @@ class StationsService:
                         xml_content = zip_file.read(xml_file_name).decode("latin-1")
                         root = ET.fromstring(xml_content)
 
-                        ids = []
-                        latitude = []
-                        longitude = []
-                        cp = []
-                        ville = []
-                        adresse = []
-                        carburants_list = []
+                        stations = []
 
                         for pdv_element in root.findall(".//pdv"):
                             services = [
@@ -317,51 +291,39 @@ class StationsService:
                                     pdv_cp = pdv_element.get("cp")
                                     pdv_ville = pdv_element.get("ville")
                                     pdv_adresse = pdv_element.findtext(".//adresse")
-                                    ids.append(pdv_id)
-                                    latitude.append(pdv_latitude)
-                                    longitude.append(pdv_longitude)
-                                    cp.append(pdv_cp)
-                                    ville.append(pdv_ville)
-                                    adresse.append(pdv_adresse)
 
-                                    carburants_list.append(carburants)
+                                    # Récupérer les prix de la station actuelle
+                                    prix_carburant = [
+                                        PrixCarburant(
+                                            carburant_element.get("id"),
+                                            pdv_id,
+                                            float(carburant_element.get("valeur")),
+                                        )
+                                        for carburant_element in pdv_element.findall(
+                                            ".//prix"
+                                        )
+                                        if carburant_element.get("nom")
+                                        == carburants_recherches
+                                    ]
 
-                        stations = [
-                            Station(
-                                pdv_id,
-                                pdv_cp,
-                                pdv_ville,
-                                pdv_adresse,
-                                Coordonnees(
-                                    pdv_id,
-                                    float(pdv_latitude) / 100000,
-                                    float(pdv_longitude) / 100000,
-                                    pdv_adresse,
-                                ),
-                                [
-                                    PrixCarburant(
-                                        carburant_element.get("id"),
+                                    # Créer l'objet Station avec toutes les informations nécessaires
+                                    station = Station(
                                         pdv_id,
-                                        float(carburant_element.get("valeur")),
+                                        pdv_cp,
+                                        pdv_ville,
+                                        pdv_adresse,
+                                        Coordonnees(
+                                            pdv_id,
+                                            float(pdv_latitude) / 100000,
+                                            float(pdv_longitude) / 100000,
+                                            pdv_adresse,
+                                        ),
+                                        prix_carburant,
                                     )
-                                    for carburant_element in pdv_element.findall(
-                                        ".//prix"
-                                    )
-                                    if carburant_element.get("nom")
-                                    == carburants_recherches
-                                ],
-                            )
-                            for pdv_id, pdv_cp, pdv_ville, pdv_adresse, pdv_latitude, pdv_longitude, carburants in zip(
-                                ids,
-                                cp,
-                                ville,
-                                adresse,
-                                latitude,
-                                longitude,
-                                carburants_list,
-                            )
-                        ]
 
+                                    stations.append(station)
+
+                        # Le reste du code reste inchangé
                         dist = []
                         for x in stations:
                             y = x.coordonnees.dist(coor_utilisateur)
@@ -500,7 +462,7 @@ class StationsService:
 if __name__ == "__main__":
     station = StationsService()
     print(
-        station.trouver_stations_par_filtres_adresse(
-            5, "Lavage automatique", "Gazole", "la renouette, laillé"
+        station.trouver_stations_par_filtres(
+            5, "Lavage automatique", "Gazole", 42.25, 1.23
         )
     )
