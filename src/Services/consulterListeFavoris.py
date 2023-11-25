@@ -1,7 +1,8 @@
 from DAO.listeDAO import ListeDAO
 from Classe import Liste
 from DAO.stationDAO import StationDAO
-from service_station import StationsService
+from Services.service_station import StationsService
+
 
 # Besoin de la classe Session car aucun paramètre va être passé en paramètre
 
@@ -35,7 +36,7 @@ class ConsulterListesFavoris:
         station = StationDAO()
         id_station = station.get_id_stations_from_liste(id_liste)
         service_station = StationsService()
-        informations_stations = service_station.info_stations_preferees(id_station)
+        informations_stations = service_station.info_stations_preferees2(id_station)
         return informations_stations
 
 

@@ -8,6 +8,7 @@ from Services.service_station import StationsService
 from typing import Optional  # Importez Optional
 from Services.modif_stations_de_listes import ModifStationListes
 
+
 app = FastAPI()
 
 
@@ -102,16 +103,10 @@ async def retirer_station(id_liste: int, id_station: str):
         raise HTTPException(status_code=500, detail="Erreur interne du serveur.")
 
 
-""" # Choose list
-@app.get("/listesFav/{numero}")
-async def get_station_liste(numero: int):
-    global listes_db
-    Listes = ListeDAO().find_all_listes("8")
-    for i in range(len(Listes)):
-        listes_db["Station " + str(i + 1)] = Liste(
-            id_liste=Listes[i].id_liste, nom=Listes[i].nom_liste
-        )
-    return listes_db["Station " + str(numero)] """
+@app.get("/get/information/liste/{id_liste}")
+async def get_information_liste(id_liste: int):
+    favoris = ConsulterListesFavoris()
+    return favoris.information_liste(id_liste)
 
 
 # Run the FastAPI application

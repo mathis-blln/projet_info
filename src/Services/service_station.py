@@ -280,3 +280,14 @@ class StationsService:
 
         # Utilisez jsonify pour convertir la liste de dictionnaires en JSON
         return json.dumps(resultats, indent=2)
+
+    def info_stations_preferees2(self, liste: list):
+        resultats = []
+
+        for id_station in liste:
+            informations_station = self.trouver_informations_par_id(id_station)
+
+            if informations_station:
+                resultats.append(informations_station)
+
+        return resultats
