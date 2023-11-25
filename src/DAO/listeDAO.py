@@ -27,6 +27,7 @@ class ListeDAO:
 
         return listes
 
+    """
     def taille_table(self, id_user) -> int:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
@@ -60,6 +61,25 @@ class ListeDAO:
                     res["id_liste"], res["id_utilisateur"], res["nom_liste"]
                 )
                 return element
+    """
+
+    def add_liste(self, id_user, nom_liste) -> Liste:
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO projet.listes (id_utilisateur, nom_liste) "
+                    "VALUES (%(id_utilisateur)s, %(nom_liste)s) "
+                    "RETURNING id_liste, id_utilisateur, nom_liste",
+                    {
+                        "id_utilisateur": int(id_user),
+                        "nom_liste": nom_liste,
+                    },
+                )
+                res = cursor.fetchone()
+                element = Liste(
+                    res["id_liste"], res["id_utilisateur"], res["nom_liste"]
+                )
+                return element
 
     def remove_liste(self, id_user, id_liste) -> Optional[bool]:
         with DBConnection().connection as connection:
@@ -80,5 +100,5 @@ if __name__ == "__main__":
     liste_dao = ListeDAO()
 
     # Test de la méthode add_liste
-    nouvelle_liste = liste_dao.add_liste(3, "nice")
+    nouvelle_liste = liste_dao.add_liste(2, "marseille")
     print(" liste ajoutée ")
