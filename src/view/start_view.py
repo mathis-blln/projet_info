@@ -88,5 +88,5 @@ class StartView:
 
                 if response_back["choix_back"] == "Quitter":
                     break
-
-        return None
+            elif response["choix"] == "Quitter":
+                break

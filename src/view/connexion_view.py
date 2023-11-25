@@ -2,6 +2,7 @@ from InquirerPy import prompt
 from view.abstract_view import AbstractView
 from view.session_view import Session
 from Services.authentification import Authentification
+from DAO.inscriptionDAO import InscriptionDAO
 
 
 class ConnexionView(AbstractView):
@@ -25,10 +26,10 @@ class ConnexionView(AbstractView):
     def make_choice(self):
         while True:
             answers = prompt(self.__questions)
-            user_id = answers["nom_utilisateur"]
+            user_username = answers["nom_utilisateur"]
             user_password = answers["mot_de_passe"]
 
-            auth = Authentification().verifier(user_id, user_password)
+            auth = Authentification().verifier(user_username, user_password)
 
             if not auth:
                 print("Le nom d'utilisateur ou le mot de passe est incorrect.")
@@ -36,10 +37,15 @@ class ConnexionView(AbstractView):
                 return "EchecConnexion"  # Renvoie "EchecConnexion" en cas d'échec d'authentification
 
             else:
-                # Si l'authentification réussit, stockez l'ID utilisateur dans la session
-                Session().id_utilisateur = user_id
-                Session().mdp = user_password
+                session = Session()
+                inscriptionDAO = InscriptionDAO()
+                user = inscriptionDAO.get_user_by_username(user_username)
+                user_id = user[
+                    "id_utilisateur"
+                ]  # Obtention de l'ID de l'utilisateur à partir du résultat
+                print(f"votre identifiant est : {user_id}")
                 print("Connexion réussie.")
+
                 import uvicorn
                 from fastapi import FastAPI
                 import subprocess

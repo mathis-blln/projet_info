@@ -58,9 +58,9 @@ async def obtenir_informations_station(
 
 
 # List all favorite lists
-@app.get("/listesFav/}", response_model=PyList[Liste])
+@app.get("/listesFav/{id_utilisateur}}", response_model=PyList[Liste])
 async def get_listes_favorites():
-    user_id = Session().id_utilisateur
+    user_id = id_utilisateur
     consulter = ConsulterListesFavoris()
     listes = consulter.consulter_listes(user_id)
     if not listes:
