@@ -1,6 +1,7 @@
 import requests
 from view.abstract_view import AbstractView
 from InquirerPy import inquirer
+from view.session_view import Session  # Importez la classe Session appropriée ici
 
 
 class MenuView(AbstractView):
@@ -41,6 +42,9 @@ class MenuView(AbstractView):
                 pass
 
             elif choice == "disconnect":
+                Session().clear_session()  # Nettoyer la session
                 print("Déconnexion réussie.")
-                input("Appuyez sur Entrée pour quitter...")
-                return None
+                return None  # Quitter l'interface
+
+            input("Appuyez sur Entrée pour quitter...")
+            return None
