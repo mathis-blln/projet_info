@@ -1,0 +1,8 @@
+# Ignore les fichiers .pyc
+*.pyc
+
+# Ignore le répertoire "my_directory"
+my_directory/
+
+# Ignore les fichiers de configuration
+*.config

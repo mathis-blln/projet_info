@@ -49,4 +49,4 @@ class ConnexionView(AbstractView):
                 print("Connexion réussie.")
                 menu_view = MenuView()
                 menu_view.display_info()
-                return menu_view.make_choice()
+                menu_view.make_choice()
