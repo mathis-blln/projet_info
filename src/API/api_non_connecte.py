@@ -57,7 +57,6 @@ async def obtenir_informations_station(
     return JSONResponse(content=response_data)
 
 
-# Run the FastAPI application
 if __name__ == "__main__":
     import uvicorn
 
