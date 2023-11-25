@@ -1,6 +1,10 @@
 from geopy.geocoders import Nominatim
 
 
+def extraire_premier_element(liste_de_listes):
+    return [sous_liste[0] for sous_liste in liste_de_listes]
+
+
 def trier(liste: list[list]):
     liste_triee = sorted(liste, key=lambda x: x[1])
     return liste_triee
