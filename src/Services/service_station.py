@@ -396,6 +396,15 @@ class StationsService:
             print("Le contenu extrait n'est pas un fichier XML valide.")
 
     def trouver_informations_par_id(self, id_station: int):
+        """
+         Permet de récupérer des informations sur les stations en utilisant leur id_station.
+
+        Args:
+            id_station : INT
+
+        Returns:
+            dict : Liste d'infos sur la station
+        """
         url = "https://donnees.roulez-eco.fr/opendata/instantane"
 
         try:
