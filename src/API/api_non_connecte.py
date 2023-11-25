@@ -16,76 +16,44 @@ from Session import Session
 app2 = FastAPI()
 
 
-class Liste(BaseModel):
-    id_liste: int
-    nom_liste: str
+@app2.get("/distincts/elements/carburants&services/")
+async def get_distinct_information():
+    station = StationsService()
+    return station.get_distinct_elements()
 
 
-# List all favorite lists
-@app2.get("/listesFav/{id_user}", response_model=PyList[Liste])
-async def get_listes_favorites(id_user):
-    consulter = ConsulterListesFavoris()
-    listes = consulter.consulter_listes(id_user)
-    if not listes:
-        raise HTTPException(status_code=404, detail="Aucune liste de favoris trouvée.")
-    return listes
-
-
-""" @app.get("/stations/informations/{id_station}")
-async def obtenir_informations_station(id_station: int):
+@app2.get(
+    "/recherche/par/filtres/adresse/{n}/{services_recherches}/{carburant_recherche}/{adresse_utilisateur}"
+)
+async def obtenir_informations_station_par_adresse(
+    n: int, services_recherches: str, carburant_recherche: str, adresse_utilisateur: str
+):
     stations_service = StationsService()
-    return stations_service.trouver_informations_par_id(id_station) """
-
-
-@app2.post("/creer_liste", response_model=Liste)
-async def creer_liste(nom_liste: str, id_utilisateur: int):
-    consulter = ConsulterListesFavoris()
-    nouvelle_liste_creee = consulter.creer_nouvelle_liste(
-        id_utilisateur=id_utilisateur, nom_liste=nom_liste
+    response_data = stations_service.trouver_stations_par_filtres_adresse(
+        n, services_recherches, carburant_recherche, adresse_utilisateur
     )
-    return nouvelle_liste_creee
+    return JSONResponse(content=response_data)
 
 
-@app2.delete("/retirer_liste", response_model=bool)
-async def retirer_liste(id_utilisateur: int, id_liste: int):
-    consulter = ConsulterListesFavoris()
-    liste_retiree = consulter.retirer_liste(
-        id_utilisateur=id_utilisateur, id_liste=id_liste
+@app2.get(
+    "/recherche/par/filtres/{n}/{services_recherches}/{carburant_recherche}/{latitude}/{longitude}"
+)
+async def obtenir_informations_station(
+    n: int,
+    services_recherches: str,
+    carburant_recherche: str,
+    latitude: float,
+    longitude: float,
+):
+    stations_service = StationsService()
+    response_data = stations_service.trouver_stations_par_filtres(
+        n, services_recherches, carburant_recherche, latitude, longitude
     )
-    return liste_retiree
-
-
-# ajouter une station dans une liste
-@app2.post("/ajouter_station/{id_liste}/{id_station}")
-async def ajouter_station(id_liste, id_station):
-    station_modifier = ModifStationListes()
-    try:
-        response = station_modifier.ajouter_station(id_liste, id_station)
-        return response
-    except Exception as e:
-        print(f"Erreur : {e}")
-        raise HTTPException(status_code=500, detail="Erreur interne du serveur.")
-
-
-@app2.delete("/retirer_station/{id_liste}/{id_station}", response_model=Dict)
-async def retirer_station(id_liste: int, id_station: str):
-    station_modifier = ModifStationListes()
-    try:
-        response = station_modifier.remove_station(id_liste, id_station)
-        return response
-    except Exception as e:
-        print(f"Erreur : {e}")
-        raise HTTPException(status_code=500, detail="Erreur interne du serveur.")
-
-
-@app2.get("/get/information/liste/{id_liste}")
-async def get_information_liste(id_liste: int):
-    favoris = ConsulterListesFavoris()
-    return favoris.information_liste(id_liste)
+    return JSONResponse(content=response_data)
 
 
 # Run the FastAPI application
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app2, host="127.0.0.1", port=8000)
