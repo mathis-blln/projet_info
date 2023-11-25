@@ -21,14 +21,18 @@ class Liste(BaseModel):
     nom_liste: str
 
 
-@app.get("/distincts/elements/carburants&services/")
+@app.get(
+    "/distincts/elements/carburants&services/",
+    description="Obtenir tous les services et carburants distincts dans le fichier XML",
+)
 async def get_distinct_information():
     station = StationsService()
     return station.get_distinct_elements()
 
 
 @app.get(
-    "/recherche/par/filtres/adresse/{n}/{services_recherches}/{carburant_recherche}/{adresse_utilisateur}"
+    "/recherche/par/filtres/adresse/{n}/{services_recherches}/{carburant_recherche}/{adresse_utilisateur}",
+    description="Obtenir toutes les stations correspondant à un filtre choisi utilisant l'adresse",  # noqa: E501
 )
 async def obtenir_informations_station_par_adresse(
     n: int, services_recherches: str, carburant_recherche: str, adresse_utilisateur: str
@@ -41,7 +45,8 @@ async def obtenir_informations_station_par_adresse(
 
 
 @app.get(
-    "/recherche/par/filtres/{n}/{services_recherches}/{carburant_recherche}/{latitude}/{longitude}"
+    "/recherche/par/filtres/{n}/{services_recherches}/{carburant_recherche}/{latitude}/{longitude}",
+    description="Obtenir toutes les stations correspondant à un filtre choisi utilisant les coordonnées latitude et longitude",  # noqa: E501
 )
 async def obtenir_informations_station(
     n: int,
