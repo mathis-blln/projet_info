@@ -24,16 +24,12 @@ class TestAdresseEnCoordonnees(unittest.TestCase):
 
     @patch("geopy.geocoders.Nominatim.geocode")
     def test_adresse_en_coordonnees_with_none_location(self, mock_geocode):
-        # Configurer le mock pour simuler un emplacement None (adresse non trouvée)
         mock_geocode.return_value = None
 
-        # Appeler la méthode avec une adresse fictive
         result = adresse_en_coordonnees("Adresse inexistante")
 
-        # Vérifier que la méthode geocode a été appelée avec l'adresse attendue
         mock_geocode.assert_called_once_with("Adresse inexistante")
 
-        # Vérifier que le résultat est None
         self.assertIsNone(result)
 
 
