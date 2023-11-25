@@ -24,7 +24,7 @@ class ConsulterListesFavoris:
             print("Aucune liste de favoris trouvée.")
         print("-----------------------------------")
 
-    def creer_nouvelle_liste(self, id_utilisateur: str, nom_liste: str):
+    def creer_nouvelle_liste(self, id_utilisateur: int, nom_liste: str):
         nouvelle_liste = ListeDAO().add_liste(id_utilisateur, nom_liste)
         return nouvelle_liste
 
@@ -41,4 +41,5 @@ class ConsulterListesFavoris:
 
 
 if __name__ == "__main__":
-    print(ConsulterListesFavoris().information_liste(4))
+    consulter = ConsulterListesFavoris()
+    consulter.creer_nouvelle_liste(3, "plage")

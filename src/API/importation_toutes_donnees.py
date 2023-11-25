@@ -117,14 +117,22 @@ def trouver_stations_par_filtres(
     n: int,
     services_recherches: str,
     carburants_recherches: str,
-    latitude,
-    longitude
+    adresse: str
     # coor_utilisateur: Coordonnees,
 ):
     # pour les services, mettre liste vide si aucun filtre dessus
     # pour les carburants, tous les mettre ["Gazole", "E10", "GPLc","SP98","SP95","E85"]
     # on pourra rajouter aussi le paramètre horaire après
-    coor_utilisateur = Coordonnees(0, latitude, longitude, "")
+    coor = adresse_en_coordonnees(adresse)
+
+    if coor:
+        # objet Coordonnees pour représenter la position de l'utilisateur
+        coor_utilisateur = Coordonnees(0, coor[0], coor[1], "adresse")
+    else:
+        # cas où la transformation d'adresse a échoué
+        print("La transformation d'adresse en coordonnées a échoué.")
+        return
+
     url = "https://donnees.roulez-eco.fr/opendata/instantane"
 
     debut_execution = datetime.datetime.now()
@@ -219,7 +227,7 @@ def trouver_stations_par_filtres(
         print("Le contenu extrait n'est pas un fichier XML valide.")
 
 
-trouver_stations_par_filtres(5, "", "Gazole", 48.6428477, 2.7143162)
+trouver_stations_par_filtres(5, "Lavage automatique", "Gazole", "la renouette, laillé")
 
 
 def trouver_informations_par_id(id_station: int):
