@@ -8,6 +8,8 @@ from Services.service_station import StationsService
 
 
 class ConsulterListesFavoris:
+    """Cette classe gère toutes les actions liées à l'administration de son profil"""
+
     def consulter_listes(self, id_user) -> list[Liste]:
         resultat = ListeDAO().find_all_listes(id_user)
         self.afficher_listes(resultat)

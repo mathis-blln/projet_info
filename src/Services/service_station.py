@@ -19,6 +19,8 @@ import json
 
 
 class StationsService:
+    """Cette classe gère l'ensemble des actions liées aux stations-services"""
+
     def get_distinct_elements(self):
         """
         Récupère et retourne tous les éléments distincts du fichier XML compressé, convertis en instances de classe.
@@ -239,6 +241,19 @@ class StationsService:
         carburants_recherches: str,
         adresse_utilisateur: str,
     ):
+        """
+         Permet de trouver une ou plusieurs stations en rentrant n(le nombre de stations recherchées),
+         carburants recherchés, services recherchés, adresse et rayon(afin de délimiter une zone de recherche)
+
+        Args:
+            n : int
+            services_recherches : str
+            carburants_recherches : str
+            adresse_utilisasteur : str
+
+        Returns:
+            list: Liste d'instances de la classe Station.
+        """  # noqa: E501
         coor = adresse_en_coordonnees(adresse_utilisateur)
 
         if coor:
@@ -384,6 +399,15 @@ class StationsService:
             print("Le contenu extrait n'est pas un fichier XML valide.")
 
     def trouver_informations_par_id(self, id_station: int):
+        """
+         Permet de récupérer des informations sur les stations en utilisant leur id_station.
+
+        Args:
+            id_station : int
+
+        Returns:
+            dict : Liste d'infos sur la station
+        """
         url = "https://donnees.roulez-eco.fr/opendata/instantane"
 
         try:

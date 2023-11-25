@@ -61,12 +61,3 @@ class InscriptionDAO(metaclass=Singleton):
                     {"username": username},
                 )
                 return cursor.fetchone()
-
-
-# if __name__ == "__main__":
-#    moi = InscriptionDAO().add_user("Mohamed", "0000")
-#    print(
-#       "Vos identifiants sont ({},{},{}).".format(
-#         moi._id_utilisateur, moi._nom_utilisateur, moi._mot_de_passe
-#    )
-# )

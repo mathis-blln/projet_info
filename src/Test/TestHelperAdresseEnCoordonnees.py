@@ -1,50 +1,35 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from geopy.geocoders import Nominatim
-
-
-def adresse_en_coordonnees(adresse):
-    geolocator = Nominatim(user_agent="géoloc")
-    location = geolocator.geocode(adresse)
-
-    if location:
-        latitude = location.latitude
-        longitude = location.longitude
-        return latitude, longitude
-    else:
-        return None
+from helper import *
 
 
 class TestAdresseEnCoordonnees(unittest.TestCase):
     @patch("geopy.geocoders.Nominatim.geocode")
     def test_adresse_en_coordonnees_with_location(self, mock_geocode):
-        # Configurer le mock pour simuler un emplacement
+        # Pour configurer le mock pour simuler un emplacement
         mock_location = MagicMock()
         mock_location.latitude = 40.7128
         mock_location.longitude = -74.0060
         mock_geocode.return_value = mock_location
 
-        # Appeler la méthode avec une adresse fictive
+        # Pour appeler la méthode avec une adresse fictive
         result = adresse_en_coordonnees("New York, USA")
 
-        # Vérifier que la méthode geocode a été appelée avec l'adresse attendue
+        # Pour vérifier que la méthode geocode a été appelée avec l'adresse attendue
         mock_geocode.assert_called_once_with("New York, USA")
 
-        # Vérifier que le résultat correspond aux coordonnées simulées
+        # POur vérifier que le résultat correspond aux coordonnées simulées
         self.assertEqual(result, (40.7128, -74.0060))
 
     @patch("geopy.geocoders.Nominatim.geocode")
     def test_adresse_en_coordonnees_with_none_location(self, mock_geocode):
-        # Configurer le mock pour simuler un emplacement None (adresse non trouvée)
         mock_geocode.return_value = None
 
-        # Appeler la méthode avec une adresse fictive
         result = adresse_en_coordonnees("Adresse inexistante")
 
-        # Vérifier que la méthode geocode a été appelée avec l'adresse attendue
         mock_geocode.assert_called_once_with("Adresse inexistante")
 
-        # Vérifier que le résultat est None
         self.assertIsNone(result)
 
 

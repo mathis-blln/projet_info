@@ -14,15 +14,15 @@ class TestCoordonnees(unittest.TestCase):
         coord1 = Coordonnees(1, 40.7128, -74.0060, "New York")
         coord2 = Coordonnees(2, 40.7128, -74.0060, "New York")
         distance = coord1.dist(coord2)
-        self.assertEqual(distance, [1, 0])  # Distance between a point and itself is 0
+        self.assertEqual(distance, [1, 0])
 
     def test_dist_method_different_points(self):
         coord1 = Coordonnees(1, 40.7128, -74.0060, "New York")
         coord2 = Coordonnees(2, 34.0522, -118.2437, "Los Angeles")
-        # Calculating approximate distance between these two points in km
+
         expected_distance = 3935.0
         result = coord1.dist(coord2)
-        self.assertEqual(result[0], 1)  # Verify the station ID
+        self.assertEqual(result[0], 1)
         self.assertAlmostEqual(result[1], expected_distance, delta=1)
 
 

@@ -44,6 +44,7 @@ class InscriptionView(AbstractView):
             if new_user_id:
                 session = Utilisateur(new_user_id, user_username, user_password)
                 print("Inscription réussie.")
+                print(new_user_id)
                 return "Connexion"  # Redirige vers la vue Connexion après l'inscription
             else:
                 print("Echec de l'inscription.")

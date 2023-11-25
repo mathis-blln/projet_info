@@ -26,7 +26,8 @@ async def get_distinct_information():
 
 
 @app2.get(
-    "/recherche/par/filtres/adresse/{n}/{services_recherches}/{carburant_recherche}/{adresse_utilisateur}"
+    "/recherche/par/filtres/adresse/{n}/{services_recherches}/{carburant_recherche}/{adresse_utilisateur}",
+    description="Obtenir toutes les stations correspondant à un filtre choisi utilisant l'adresse",  # noqa: E501
 )
 async def obtenir_informations_station_par_adresse(
     n: int, services_recherches: str, carburant_recherche: str, adresse_utilisateur: str
@@ -39,7 +40,8 @@ async def obtenir_informations_station_par_adresse(
 
 
 @app2.get(
-    "/recherche/par/filtres/{n}/{services_recherches}/{carburant_recherche}/{latitude}/{longitude}"
+    "/recherche/par/filtres/{n}/{services_recherches}/{carburant_recherche}/{latitude}/{longitude}",
+    description="Obtenir toutes les stations correspondant à un filtre choisi utilisant les coordonnées latitude et longitude",  # noqa: E501
 )
 async def obtenir_informations_station(
     n: int,
@@ -55,7 +57,6 @@ async def obtenir_informations_station(
     return JSONResponse(content=response_data)
 
 
-# Run the FastAPI application
 if __name__ == "__main__":
     import uvicorn
 
