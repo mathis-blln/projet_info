@@ -19,6 +19,8 @@ import json
 
 
 class StationsService:
+    """Cette classe gère l'ensemble des actions liées aux stations-services"""
+
     def get_distinct_elements(self):
         """
         Récupère et retourne tous les éléments distincts du fichier XML compressé, convertis en instances de classe.
@@ -400,7 +402,7 @@ class StationsService:
          Permet de récupérer des informations sur les stations en utilisant leur id_station.
 
         Args:
-            id_station : INT
+            id_station : int
 
         Returns:
             dict : Liste d'infos sur la station
