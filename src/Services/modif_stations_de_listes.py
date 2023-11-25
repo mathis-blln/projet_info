@@ -4,6 +4,8 @@ from DAO.stationDAO import StationDAO
 
 
 class ModifStationListes:
+    """Cette classe gère toutes les actions liées à la modification des listes"""
+
     def ajouter_station(self, id_liste, id_station):
         station = StationDAO().add_id_station(id_liste, id_station)
         response = {
