@@ -16,6 +16,11 @@ from Session import Session
 app2 = FastAPI()
 
 
+class Liste(BaseModel):
+    id_liste: int
+    nom_liste: str
+
+
 # List all favorite lists
 @app2.get("/listesFav/{id_user}", response_model=PyList[Liste])
 async def get_listes_favorites(id_user):
