@@ -1,7 +1,7 @@
 import requests
 from view.abstract_view import AbstractView
 from InquirerPy import inquirer
-from view.session_view import Session  # Importez la classe Session appropriée ici
+from view.session_view import Session
 
 
 class MenuView(AbstractView):
@@ -25,17 +25,17 @@ class MenuView(AbstractView):
             ).execute()
 
             if choice == "search":
-                # Code pour effectuer une recherche
-                pass
-
+                print("ouvrez le lien suivant")
+                print("http://127.0.0.1/docs")
             elif choice == "favorites":
-                numero = int(input("Entrez le numéro de la liste : "))
-                response = requests.get(f"http://127.0.0.1/listesFav/{numero}")
-                if response.status_code == 200:
-                    data = response.json()
-                    print(f"Liste favorite {numero}: {data}")
-                else:
-                    print(f"Erreur lors de la récupération de la liste {numero}.")
+                #               numero = int(input("Entrez le numéro de la liste : "))
+                #               response = requests.get(f"http://127.0.0.1/listesFav/{numero}")
+                #               if response.status_code == 200:
+                #                    data = response.json()
+                #                    print(f"Liste favorite {numero}: {data}")
+                pass
+            #                else:
+            #                    print(f"Erreur lors de la récupération de la liste {numero}.")
 
             elif choice == "modify_delete":
                 # Code pour modifier ou supprimer les stations favorites

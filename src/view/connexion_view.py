@@ -40,6 +40,16 @@ class ConnexionView(AbstractView):
                 Session().id_utilisateur = user_id
                 Session().mdp = user_password
                 print("Connexion réussie.")
+                import uvicorn
+                from fastapi import FastAPI
+                import subprocess
+
+                def lancer_api():
+                    subprocess.Popen(
+                        ["uvicorn", "app:app", "--host", "127.0.0.1", "--port", "80"]
+                    )
+
+                lancer_api()
                 return (
                     None  # Renvoie None pour indiquer que l'authentification a réussi
                 )
