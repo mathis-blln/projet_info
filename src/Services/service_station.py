@@ -239,6 +239,18 @@ class StationsService:
         carburants_recherches: str,
         adresse_utilisateur: str,
     ):
+        """
+         Permet de trouver une ou plusieurs stations en rentrant n(le nombre de stations recherchées), carburants recherchés, services recherchés, adresse et rayon(afin de délimiter une zone de recherche)
+
+        Args:
+            n : int
+            services_recherches : str
+            carburants_recherches : str
+            adresse_utilisasteur : str
+
+        Returns:
+            list: Liste d'instances de la classe Station.
+        """
         coor = adresse_en_coordonnees(adresse_utilisateur)
 
         if coor:
