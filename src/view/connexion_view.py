@@ -47,12 +47,19 @@ class ConnexionView(AbstractView):
                 print("Connexion réussie.")
 
                 import uvicorn
-                from fastapi import FastAPI
+                from API.api_connecte import app
                 import subprocess
 
                 def lancer_api():
                     subprocess.Popen(
-                        ["uvicorn", "app:app", "--host", "127.0.0.1", "--port", "80"]
+                        [
+                            "uvicorn",
+                            "API.api_connecte:app",
+                            "--host",
+                            "127.0.0.1",
+                            "--port",
+                            "80",
+                        ]
                     )
 
                 lancer_api()
