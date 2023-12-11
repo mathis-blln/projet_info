@@ -68,8 +68,7 @@ async def obtenir_informations_station(
     response_model=PyList[Liste],
     description="Obtenir toutes les listes favorites de l'utilisateur",
 )
-async def get_listes_favorites():
-    user_id = id_utilisateur
+async def get_listes_favorites(user_id):
     consulter = ConsulterListesFavoris()
     listes = consulter.consulter_listes(user_id)
     if not listes:
